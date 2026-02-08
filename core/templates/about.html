@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .hero-small {
+        padding: 60px 0;
+        text-align: center;
+    }
+    .feature-box {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 40px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    .feature-box:hover {
+        transform: translateY(-5px);
+        border-color: #39ff14; /* Neon Green to match Dashboard */
+        background: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 0 15px rgba(57, 255, 20, 0.1);
+    }
+    .neon-text {
+        color: #39ff14;
+        text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+    }
+    .story-text {
+        color: #cccccc;
+        line-height: 1.7;
+        font-size: 0.95rem;
+    }
+    .story-highlight {
+        color: #fff;
+        font-weight: 600;
+    }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-lg-10 hero-small">
+        <h1 class="fw-bold text-white mb-4 display-5" style="letter-spacing: -1px;">BUILT FROM THE INSIDE OUT</h1>
+        <p class="lead text-white-50 mb-4" style="font-size: 1.4rem;">
+            At FastCredentials.com, we didn’t just study the healthcare industry—<span class="text-white fw-bold">we live in it.</span>
+        </p>
+        <p class="text-white-50 mx-auto fs-5" style="max-width: 800px;">
+            We are the providers, the support staff, and the operational teams. We are the ones working behind the scenes, ensuring patient care happens safely. We built this because we are you.
+        </p>
+    </div>
+</div>
+
+<div class="row g-4 mb-5">
+    
+    <div class="col-md-6">
+        <div class="feature-box">
+            <h2 class="neon-text fw-bold mb-3">01. THE SPARK</h2>
+            <h4 class="text-white mb-3">Born in the Breakroom.</h4>
+            <p class="story-text">
+                The idea for FastCredentials wasn't born in a boardroom; it was born out of frustration. Regardless of our roles, we all shared a common burden: <span class="story-highlight">The cost of going to work.</span>
+            </p>
+            <p class="story-text mb-0">
+                From expensive CMEs to Vendor Access Portals—and yes, even paying for the Scrub Vending Machines—it felt like we were constantly paying out of pocket just to stay compliant. We looked at the industry and saw a landscape that was complicated, expensive, and indifferent. We knew there had to be a better way.
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="feature-box">
+            <h2 class="neon-text fw-bold mb-3">02. THE MISSION</h2>
+            <h4 class="text-white mb-3">Healthcare Friendly. Wallet Friendly.</h4>
+            <p class="story-text">
+                We founded FastCredentials.com on a simple, rebellious premise: <span class="story-highlight">Compliance shouldn't be a punishment.</span>
+            </p>
+            <p class="story-text mb-0">
+                We set out to create a one-stop, customer-focused destination that strips away the bureaucracy and the exorbitant fees. Our goal is to make sure that when you need a credential, you can get it quickly, easily, and at a much better value than the "big guys" charge.
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="feature-box">
+            <h2 class="neon-text fw-bold mb-3">03. QUALITY</h2>
+            <h4 class="text-white mb-3">Trust Built on Experience.</h4>
+            <p class="story-text">
+                Being affordable doesn't mean cutting corners. Because we come from the industry, we take safety and education seriously.
+            </p>
+            <p class="story-text mb-0">
+                Our state-of-the-art learning modules are rigorously constructed to <span class="story-highlight">meet or exceed industry standards</span>. We built the exams and course materials we wished we had when we were in your shoes—clear, relevant, and efficient.
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="feature-box">
+            <h2 class="neon-text fw-bold mb-3">04. WHY US?</h2>
+            <h4 class="text-white mb-3">We Want You to Win.</h4>
+            <p class="story-text">
+                When you choose FastCredentials, you aren't just buying a certificate; you are supporting a team that is rooting for you.
+            </p>
+            <p class="story-text mb-0">
+                We are here to prove that you can provide the <span class="story-highlight" style="color: #39ff14;">lowest price anywhere</span> without sacrificing quality or customer care. We want to win because when we win, the hardworking people of the healthcare system win, too.
+            </p>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5" style="max-width: 800px;">
+    <h1 class="mb-4">Terms of Service</h1>
+    <p class="text-muted">Last Updated: February 6, 2026</p>
+    
+    <hr class="mb-5">
+
+    <h3>1. Acceptance of Terms</h3>
+    <p>By accessing and using FastCredentials.com ("the Service"), you agree to comply with and be bound by these Terms of Service. If you do not agree to these terms, please do not use the Service.</p>
+
+    <h3 class="mt-4">2. Educational Nature of Services</h3>
+    <p>FastCredentials provides training courses and educational certificates for compliance topics (e.g., OSHA, HIPAA). You acknowledge that:</p>
+    <ul>
+        <li>We are a private training provider, not a government agency.</li>
+        <li>Our certificates verify that you have passed an educational exam on the material.</li>
+        <li>It is your responsibility to verify that our training meets the specific regulatory requirements of your employer or state board.</li>
+    </ul>
+
+    <h3 class="mt-4">3. Access and Expiration</h3>
+    <p><strong>365-Day Access Policy:</strong> When you purchase a course, you are granted access to the training materials and certification exam for a period of 365 days from the date of payment. After 365 days, your access will expire, and you must repurchase the course to recertify.</p>
+
+    <h3 class="mt-4">4. Payments and Refunds</h3>
+    <p>All payments are processed securely via Stripe. Due to the digital nature of our content (immediate access to intellectual property and certification), all sales are final once a certificate has been generated.</p>
+
+    <h3 class="mt-4">5. Limitation of Liability</h3>
+    <p>To the fullest extent permitted by law, FastCredentials shall not be liable for any indirect, incidental, or consequential damages resulting from your use of the Service. We do not guarantee that our certificates will prevent workplace accidents, fines, or legal action against you or your employer.</p>
+
+    <h3 class="mt-4">6. User Conduct</h3>
+    <p>You agree not to share your account credentials or allow others to take exams on your behalf. Violation of this policy will result in immediate termination of your account without refund.</p>
+
+    <h3 class="mt-4">7. Contact Us</h3>
+    <p>If you have questions about these Terms, please contact us at support@fastcredentials.com.</p>
+
+    <div class="mt-5 text-center">
+        <a href="{% url 'home' %}" class="btn btn-outline-dark">Return to Home</a>
+    </div>
+</div>
+{% endblock %}

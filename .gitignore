@@ -1,0 +1,16 @@
+# Python specifics
+__pycache__/
+*.pyc
+
+# Virtual Environment
+venv/
+env/
+
+# Database (CRITICAL security rule)
+db.sqlite3
+
+# OS generated files
+.DS_Store
+
+# Media (User uploads)
+media/

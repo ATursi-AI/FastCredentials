@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row mb-5 align-items-end">
+    <div class="col-md-8">
+        <h1 class="fw-bold display-5 text-white" style="letter-spacing: -1px; text-shadow: 0 0 10px rgba(255,255,255,0.3);">CREDENTIALS DASHBOARD</h1>
+        <p class="text-white-50 mb-0 text-uppercase small" style="letter-spacing: 2px;">{{ user.username }}</p>
+    </div>
+    
+    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+        <span class="badge bg-black rounded-pill px-4 py-3 fw-bold fs-6" 
+              style="border: 2px solid #39ff14; 
+                      color: #39ff14; 
+                      box-shadow: 0 0 20px #39ff14, inset 0 0 10px rgba(57, 255, 20, 0.3); 
+                      text-shadow: 0 0 8px rgba(57, 255, 20, 0.8);
+                      letter-spacing: 1px;">
+            CREDENTIALS COMPLETED: <span class="text-white" style="text-shadow: 0 0 10px #fff;">{{ completed_count }}</span>
+        </span>
+    </div>
+</div>
+
+<div class="row g-4">
+    {% for course in courses %}
+    <div class="col-md-6 col-lg-4">
+        <div class="glass-card h-100 p-4 d-flex flex-column" 
+             style="background: #000; 
+                    border: 2px solid {% if course.is_completed %}#39ff14{% elif course.has_paid %}#f4f9fd{% else %}#333{% endif %} !important;
+                    box-shadow: 0 0 15px {% if course.is_completed %}rgba(57, 255, 20, 0.2){% elif course.has_paid %}rgba(244, 249, 253, 0.15){% else %}rgba(0,0,0,0){% endif %};">
+            
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                {% if course.is_completed %}
+                    <span class="badge fw-bold fs-6" 
+                          style="background-color: #39ff14; color: #000000 !important; box-shadow: 0 0 10px #39ff14;">
+                        COMPLETED
+                    </span>
+                    
+                    <div class="position-relative d-inline-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                        
+                        <i class="bi bi-patch-check-fill" 
+                           style="font-size: 3.5rem; color: #39ff14; text-shadow: 0 0 15px #39ff14;">
+                        </i>
+                        
+                        <i class="bi bi-check-lg position-absolute top-50 start-50 translate-middle" 
+                           style="font-size: 2rem; color: #000000 !important; -webkit-text-stroke: 1px black;">
+                        </i>
+                        
+                    </div>
+                
+                {% elif course.has_paid %}
+                    <span class="badge fw-bold fs-6 shadow-sm" 
+                          style="background-color: #f4f9fd; color: #000000 !important;">
+                        READY
+                    </span>
+                    <i class="bi bi-unlock-fill text-white fs-5"></i>
+                
+                {% else %}
+                    <span class="badge bg-secondary text-white fw-bold">LOCKED</span>
+                    <i class="bi bi-lock-fill text-secondary fs-5"></i>
+                {% endif %}
+            </div>
+
+            <h5 class="fw-bold mb-2 text-white fs-4">
+                {{ course.title }}
+            </h5>
+            
+            <p class="small text-secondary mb-3 flex-grow-1">{{ course.description|truncatewords:12 }}</p>
+
+            <div class="mt-auto">
+                {% if course.is_completed %}
+                    <a href="{% url 'certificate_view' course.user_cert_id %}" 
+                       class="btn w-100 fw-bold fs-5 mb-2" 
+                       style="background-color: #39ff14; color: #000000 !important; border: none;">
+                        <i class="bi bi-file-earmark-pdf-fill me-2"></i>ACCESS CREDENTIAL
+                    </a>
+                    
+                    <a href="{% url 'course_detail' course.id %}" 
+                       class="btn w-100 btn-sm fw-bold text-white-50" 
+                       style="border: 1px solid #333; background: rgba(255,255,255,0.05);">
+                        <i class="bi bi-book-half me-2"></i>REVIEW MODULE
+                    </a>
+                
+                {% elif course.has_paid %}
+                    <a href="{% url 'course_detail' course.id %}" 
+                       class="btn w-100 fw-bold fs-5" 
+                       style="background-color: #f4f9fd; border: none; color: #000000 !important;">
+                        START MODULE
+                    </a>
+                
+                {% else %}
+                    <a href="{% url 'signup' %}" class="btn btn-outline-secondary w-100 fw-bold fs-6">
+                        UNLOCK COURSE
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5">
+        <h2 class="text-white-50">System Update Required</h2>
+        <p class="text-secondary">No courses found. Check database connection.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

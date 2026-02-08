@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .support-hero {
+        padding: 60px 0;
+        text-align: center;
+    }
+    
+    .glass-panel {
+        background: rgba(0, 0, 0, 0.6);
+        border: 1px solid #333;
+        border-radius: 12px;
+        padding: 30px;
+        height: 100%;
+        backdrop-filter: blur(10px);
+    }
+
+    .contact-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 2px solid #39ff14;
+        border-radius: 15px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 0 20px rgba(57, 255, 20, 0.1);
+        transition: transform 0.2s ease;
+    }
+
+    .contact-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 30px rgba(57, 255, 20, 0.2);
+    }
+
+    .faq-item {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 20px 0;
+    }
+
+    .faq-item:last-child {
+        border-bottom: none;
+    }
+
+    .faq-question {
+        color: #fff;
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .faq-answer {
+        color: #999;
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    .neon-text {
+        color: #39ff14;
+        text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+    }
+    
+    .email-link {
+        font-size: 1.5rem;
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s;
+    }
+    
+    .email-link:hover {
+        color: #39ff14;
+    }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8 support-hero">
+        <h1 class="fw-bold text-white mb-3 display-5">SUPPORT CENTER</h1>
+        <p class="lead text-white-50">
+            We know you don't have time for downtime. We're here to help you get verified and get back to work.
+        </p>
+    </div>
+</div>
+
+<div class="row justify-content-center mb-5">
+    <div class="col-lg-6">
+        <div class="contact-card">
+            <i class="bi bi-envelope-check-fill mb-3 d-block" style="font-size: 3rem; color: #39ff14;"></i>
+            <h3 class="text-white mb-3">Direct Support</h3>
+            <p class="text-white-50 mb-4">
+                Have an issue with a module, payment, or certificate? Reach out to our team directly. We are real people, not bots.
+            </p>
+            <a href="mailto:support@fastcredentials.com" class="email-link">
+                support@fastcredentials.com
+            </a>
+            <p class="small text-muted mt-3">Typical response time: Under 4 hours</p>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center pb-5">
+    <div class="col-lg-8">
+        <div class="glass-panel">
+            <h3 class="text-white mb-4 pb-2 border-bottom border-secondary">Frequently Asked Questions</h3>
+            
+            <div class="faq-item">
+                <span class="faq-question">I completed a course, but where is my certificate?</span>
+                <p class="faq-answer">
+                    Certificates are generated instantly upon passing the exam. You can find them in your <a href="{% url 'home' %}" class="text-white text-decoration-underline">Dashboard</a>. Look for the "ACCESS CREDENTIAL" button on the specific course card.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <span class="faq-question">Are these credentials accepted by major vendor systems?</span>
+                <p class="faq-answer">
+                    Yes. Our modules are built to meet or exceed OSHA, CDC, and AdvaMed standards for 2026. Each certificate includes a unique verification ID and QR code that hospital administrators and vendor management systems can instantly verify.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <span class="faq-question">I need a receipt for reimbursement.</span>
+                <p class="faq-answer">
+                    We know the drill. A downloadable, itemized receipt is automatically emailed to you upon purchase. You can also download past receipts directly from your account settings page.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <span class="faq-question">What if I fail an exam?</span>
+                <p class="faq-answer">
+                    Don't sweat it. We are education-focused, not punitive. You can review the course material and retake the exam immediately at no extra cost. We want you to master the material, not pay extra fees.
+                </p>
+            </div>
+            
+            <div class="faq-item">
+                <span class="faq-question">How do I reset my password?</span>
+                <p class="faq-answer">
+                    If you're locked out, click the "Forgot Password" link on the login screen. If you don't receive the email within 5 minutes, check your spam folder or email us at support@fastcredentials.com.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

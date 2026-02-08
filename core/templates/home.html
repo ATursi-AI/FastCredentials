@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block theme_style %}{% endblock %}
+
+{% block video_background %}
+<video id="heroVideo" class="video-bg" autoplay muted loop playsinline poster="{% static 'video-poster.jpg' %}" 
+       style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+    <source src="{% static 'hero-video.mp4' %}" type="video/mp4">
+</video>
+<div class="video-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: -1;"></div>
+{% endblock %}
+
+{% block content %}
+<style>
+    .hero-title { font-size: 3.5rem; font-weight: 800; color: white; margin-bottom: 20px; text-shadow: 0 0 20px rgba(0,0,0,0.8); }
+    @media (max-width: 768px) { .hero-title { font-size: 6.5vw !important; margin-bottom: 10px; } }
+    .neon-highlight { color: var(--neon-green); text-shadow: 0 0 20px rgba(57, 255, 20, 0.4); }
+    .course-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 20px; transition: all 0.3s ease; height: 100%; position: relative; overflow: hidden; display: block; text-decoration: none; }
+    .course-card:hover { background: rgba(255, 255, 255, 0.08); border-color: var(--neon-blue); transform: translateY(-5px); }
+    .card-number { position: absolute; top: 15px; right: 15px; font-size: 3rem; font-weight: 800; color: rgba(255, 255, 255, 0.05); line-height: 1; }
+    .main-pricing-box { border: 2px solid var(--neon-green); background: rgba(0,0,0,0.8); border-radius: 20px; box-shadow: 0 0 30px rgba(57, 255, 20, 0.15); }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-12 text-center pt-4 pb-5">
+        <h1 class="hero-title">CREDENTIALING AT THE<br>SPEED OF BUSINESS.</h1>
+        <div class="d-inline-block main-pricing-box px-3 px-md-5 py-3 mb-5">
+            <h2 class="m-0 fw-bold text-white" style="letter-spacing: 1px;">
+                ALL ACCESS: <span class="neon-highlight">ALL 8 COURSES $19.99</span>
+            </h2>
+            <div class="text-white mt-2" style="font-size: 1.2rem; font-weight: 600; text-shadow: 0 0 10px rgba(255,255,255,0.3);">
+                INSTANT CERTIFICATE UPON TEST COMPLETION
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-5">
+    {% for course in courses %}
+    <div class="col-md-6 col-lg-4">
+        <a href="{% url 'course_detail' course.id %}" class="course-card">
+            <span class="card-number">{{ forloop.counter|stringformat:"02d" }}</span>
+            <div class="course-title fw-bold text-white mb-2">{{ course.title }}</div>
+            <div class="course-desc small text-white-50">{{ course.description|truncatewords:15 }}</div>
+            <div class="mt-3 text-end">
+                <span class="badge bg-transparent" 
+                      style="border: 1px solid #39ff14; color: #39ff14; text-shadow: 0 0 8px rgba(57, 255, 20, 0.5);">
+                    START NOW &rarr;
+                </span>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="row justify-content-center pb-5">
+    <div class="col-md-8 text-center">
+        {% if user.is_authenticated %}
+            <a href="{% url 'dashboard' %}" class="btn btn-lg w-100 py-3 rounded-pill fw-bold" 
+               style="background-color: var(--neon-green); color: black; font-size: 1.5rem; box-shadow: 0 0 25px rgba(57, 255, 20, 0.6); border: none;">
+                GO TO DASHBOARD
+            </a>
+        {% else %}
+            <a href="{% url 'signup' %}" class="btn btn-lg w-100 py-3 rounded-pill fw-bold" 
+               style="background-color: var(--neon-green); color: black; font-size: 1.5rem; box-shadow: 0 0 25px rgba(57, 255, 20, 0.6); border: none;">
+                GET STARTED NOW
+            </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

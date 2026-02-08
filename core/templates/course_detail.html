@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    
+    <div class="row mb-5 align-items-center">
+        <div class="col-md-8">
+            <h1 class="display-4 fw-bold text-dark">{{ course.title }}</h1>
+            <p class="lead text-secondary">{{ course.description }}</p>
+            <div class="d-flex gap-3">
+                <span class="badge bg-light text-dark border p-2">
+                    <i class="bi bi-clock me-1"></i> {{ course.duration_minutes }} Minutes
+                </span>
+                <span class="badge bg-light text-dark border p-2">
+                    <i class="bi bi-book me-1"></i> {{ course.lessons.count }} Modules
+                </span>
+            </div>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <h4 class="mb-4 text-primary"><i class="bi bi-journal-richtext me-2"></i>Study Modules</h4>
+            
+            {% if course.lessons.all %}
+                <div class="accordion shadow-sm" id="accordionLessons">
+                    {% for lesson in course.lessons.all %}
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading{{ lesson.id }}">
+                            <button class="accordion-button {% if not forloop.first %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ lesson.id }}" aria-expanded="{{ forloop.first }}" aria-controls="collapse{{ lesson.id }}">
+                                <strong>Module {{ lesson.order }}: {{ lesson.title }}</strong>
+                            </button>
+                        </h2>
+                        <div id="collapse{{ lesson.id }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" aria-labelledby="heading{{ lesson.id }}" data-bs-parent="#accordionLessons">
+                            <div class="accordion-body">
+                                {% if lesson.video_url %}
+                                    <div class="ratio ratio-16x9 mb-3">
+                                        <iframe 
+                                            src="{{ lesson.get_embed_url }}" 
+                                            allowfullscreen 
+                                            referrerpolicy="strict-origin-when-cross-origin"
+                                            style="border:0;">
+                                        </iframe>
+                                    </div>
+                                {% endif %}
+                                
+                                <div class="card-text text-secondary" style="line-height: 1.8;">
+                                    {{ lesson.content|safe }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle me-2"></i> No study content has been uploaded for this course yet.
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow border-0 sticky-top" style="top: 20px;">
+                <div class="card-body p-4 text-center">
+                    <h5 class="card-title fw-bold">Ready to Certify?</h5>
+                    <p class="card-text text-muted small mb-4">
+                        Review the modules on the left. When you are confident, proceed to the exam.
+                    </p>
+                    
+                    <a href="{% url 'take_quiz' course.id %}" class="btn btn-primary btn-lg w-100 py-3 fw-bold">
+                        START EXAM <i class="bi bi-arrow-right-circle-fill ms-2"></i>
+                    </a>
+                    
+                    <hr class="my-4">
+                    
+                    <div class="text-start small text-muted">
+                        <div class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Passing Score: 100%</div>
+                        <div class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Instant Certificate</div>
+                        <div><i class="bi bi-check-circle-fill text-success me-2"></i> Unlimited Retakes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const accordion = document.getElementById('accordionLessons');
+        accordion.addEventListener('shown.bs.collapse', function (e) {
+            const header = e.target.closest('.accordion-item');
+            const yOffset = -120; 
+            const y = header.getBoundingClientRect().top + window.scrollY + yOffset;
+            window.scrollTo({top: y, behavior: 'smooth'});
+        });
+    });
+</script>
+{% endblock %}

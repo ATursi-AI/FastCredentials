@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+            <h2 class="fw-bold text-white mb-0">Exam: {{ course.title }}</h2>
+            <a href="{% url 'course_detail' course.id %}" class="btn btn-outline-light fw-bold" style="border-width: 2px;">
+                &larr; BACK TO MODULE
+            </a>
+        </div>
+
+        <div class="glass-card p-4 p-md-5" style="border: 1px solid #333;">
+            <form method="post">
+                {% csrf_token %}
+                {% for q in questions %}
+                <div class="mb-5">
+                    <p class="fs-5 fw-bold text-white mb-3">{{ forloop.counter }}. {{ q.text }}</p>
+                    <div class="list-group">
+                        <label class="list-group-item list-group-item-action bg-black text-white border-secondary mb-2 rounded d-flex align-items-center">
+                            <input class="form-check-input me-3 mt-0" type="radio" name="question_{{ q.id }}" value="1" required style="width: 1.2em; height: 1.2em;">
+                            <span>A) {{ q.option_1 }}</span>
+                        </label>
+                        <label class="list-group-item list-group-item-action bg-black text-white border-secondary mb-2 rounded d-flex align-items-center">
+                            <input class="form-check-input me-3 mt-0" type="radio" name="question_{{ q.id }}" value="2" style="width: 1.2em; height: 1.2em;">
+                            <span>B) {{ q.option_2 }}</span>
+                        </label>
+                        <label class="list-group-item list-group-item-action bg-black text-white border-secondary mb-2 rounded d-flex align-items-center">
+                            <input class="form-check-input me-3 mt-0" type="radio" name="question_{{ q.id }}" value="3" style="width: 1.2em; height: 1.2em;">
+                            <span>C) {{ q.option_3 }}</span>
+                        </label>
+                        <label class="list-group-item list-group-item-action bg-black text-white border-secondary mb-2 rounded d-flex align-items-center">
+                            <input class="form-check-input me-3 mt-0" type="radio" name="question_{{ q.id }}" value="4" style="width: 1.2em; height: 1.2em;">
+                            <span>D) {{ q.option_4 }}</span>
+                        </label>
+                    </div>
+                </div>
+                {% endfor %}
+                
+                <div class="d-grid d-md-block text-md-end">
+                    <button type="submit" class="btn btn-success btn-lg fw-bold px-5 py-3" 
+                            style="background-color: #39ff14; color: black; border: none; box-shadow: 0 0 20px rgba(57, 255, 20, 0.5);">
+                        SUBMIT EXAM
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

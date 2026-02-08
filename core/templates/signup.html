@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .form-control-custom {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        color: white !important;
+        border-radius: 8px;
+        padding: 12px;
+    }
+</style>
+
+<div class="row justify-content-center py-5">
+    <div class="col-md-6 col-lg-5">
+        <div class="glass-card p-5" style="border: 2px solid var(--neon-green) !important; box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);">
+            
+            <h2 class="fw-bold text-center text-white mb-2" style="letter-spacing: -1px;">
+                CREATE YOUR ACCOUNT
+            </h2>
+            <p class="text-center fw-bold mb-4 text-uppercase" style="color: var(--neon-green); letter-spacing: 2px; text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);">
+                To Purchase All-Access
+            </p>
+            
+            <form method="post" novalidate>
+                {% csrf_token %}
+                
+                {% for field in form %}
+                    <div class="mb-4">
+                        <label class="form-label small text-uppercase fw-bold text-white-50" style="letter-spacing: 1px;">
+                            {{ field.label }}
+                        </label>
+                        
+                        <div class="auth-input-wrapper">
+                            {{ field.errors }}
+                            <input type="{{ field.field.widget.input_type }}" 
+                                   name="{{ field.name }}" 
+                                   class="form-control form-control-custom w-100"
+                                   id="{{ field.id_for_label }}"
+                                   {% if field.value %}value="{{ field.value }}"{% endif %}
+                                   style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); color: white; padding: 12px; border-radius: 8px;"
+                                   required>
+                        </div>
+
+                        {% if field.help_text %}
+                            <div style="font-size: 0.75rem; color: rgba(255, 255, 255, 0.6); margin-top: 5px; line-height: 1.2;">
+                                {{ field.help_text|safe }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                
+                <button type="submit" class="btn btn-lg w-100 py-3 fw-bold mt-2 rounded-pill text-black shadow" style="background-color: var(--neon-green); border: none; box-shadow: 0 0 15px rgba(57, 255, 20, 0.4);">
+                    AUTHENTICATE & CONTINUE <i class="bi bi-shield-lock-fill ms-2"></i>
+                </button>
+            </form>
+            
+            <p class="text-center mt-4 small text-white-50">
+                Already have an account? <a href="{% url 'login' %}" class="text-decoration-none fw-bold" style="color: var(--neon-green);">Log In</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

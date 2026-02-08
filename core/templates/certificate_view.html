@@ -1,0 +1,297 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+    /* --- SCREEN CONTAINER --- */
+    .cert-container { 
+        background: radial-gradient(circle at center, #2b2b2b 0%, #111111 100%); 
+        padding: 60px 0; 
+        min-height: 100vh;
+    }
+
+    /* --- THE PAPER --- */
+    .cert-paper {
+        width: 100%;
+        max-width: 11in; 
+        background: #fff;
+        margin: 0 auto;
+        position: relative;
+        box-sizing: border-box;
+        padding: 40px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.6); 
+    }
+
+    .border-thick {
+        width: 100%;
+        border: 5px solid #003366; 
+        box-sizing: border-box;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px 0;
+    }
+    
+    .border-thin {
+        position: absolute;
+        top: 5px; left: 5px; right: 5px; bottom: 5px;
+        border: 1px solid #003366;
+        box-sizing: border-box;
+        pointer-events: none;
+    }
+
+    .content-layer {
+        position: relative;
+        z-index: 10;
+        text-align: center;
+        padding: 10px 50px;
+    }
+
+    /* --- VISUALS --- */
+    .svg-badge {
+        width: 130px;
+        height: 130px;
+        margin: 0 auto 15px auto;
+    }
+    .svg-badge svg { width: 100%; height: 100%; overflow: visible; }
+
+    /* --- TYPOGRAPHY --- */
+    .header-text { 
+        font-family: 'Cinzel', serif; 
+        font-size: 3.2rem; 
+        font-weight: 700; 
+        text-transform: uppercase; 
+        letter-spacing: 8px; 
+        color: #111;
+        margin-bottom: 0;
+        line-height: 1.0;
+    }
+
+    .sub-header {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 1.0rem;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        color: #666;
+        margin-bottom: 25px;
+        border-bottom: 2px solid #eee;
+        display: inline-block;
+        padding-bottom: 5px;
+    }
+    
+    .action-text {
+        font-family: 'Playfair Display', serif;
+        font-style: italic;
+        font-size: 1.4rem;
+        color: #444;
+        margin-bottom: 10px;
+    }
+
+    .candidate-name { 
+        font-family: 'Playfair Display', serif; 
+        font-size: 3.5rem; 
+        font-weight: 700; 
+        color: #003366; 
+        margin: 5px 0 15px 0;
+        line-height: 1.1;
+    }
+    
+    .description {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 1.1rem;
+        color: #555;
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.5;
+    }
+    
+    .course-title {
+        font-family: 'Cinzel', serif;
+        font-size: 3.0rem;
+        font-weight: 700;
+        color: #000;
+        margin-top: 20px;
+        margin-bottom: 15px;
+        line-height: 1.0;
+        text-transform: uppercase;
+    }
+
+    .statute-box {
+        background-color: #fcfcfc;
+        border: 2px solid #ddd;
+        display: inline-block;
+        padding: 8px 30px;
+        border-radius: 6px;
+        margin: 10px 0;
+    }
+    
+    .statute-text {
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #222;
+    }
+
+    /* --- FOOTER GRID --- */
+    .footer-grid {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        width: 100%;
+        margin-top: 30px;
+        border-top: 2px solid #eee;
+        padding-top: 20px;
+        text-align: left;
+    }
+    
+    .footer-col {
+        width: 33%;
+    }
+
+    .label { font-family: 'Open Sans', sans-serif; font-size: 0.8rem; text-transform: uppercase; color: #888; letter-spacing: 1px; margin-bottom: 5px; }
+    .data { font-family: 'Cinzel', serif; font-size: 1.2rem; font-weight: 700; color: #000; }
+    
+    .qr-container { text-align: right; }
+    .qr-img { width: 90px; height: 90px; border: 1px solid #ddd; padding: 4px; background: #fff; }
+    .verification-text { font-family: 'Open Sans', sans-serif; font-size: 0.7rem; color: #777; margin-top: 5px; }
+
+    .name-gatekeeper { max-width: 600px; margin: 50px auto; }
+
+    /* --- PRINT OPTIMIZATION --- */
+    @media print {
+        @page { size: landscape; margin: 0; }
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+        body * { visibility: hidden; } 
+        
+        .cert-container { 
+            background: white !important; 
+            padding: 0 !important; 
+            margin: 0 !important; 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        .cert-paper, .cert-paper * { visibility: visible; }
+        
+        .cert-paper { 
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) scale(0.85);
+            width: 11in; 
+            box-shadow: none !important; 
+            margin: 0 !important;
+            border: none !important;
+        }
+        
+        .no-print { display: none !important; }
+    }
+</style>
+
+<div class="cert-container">
+
+    {% if not cert.pdf_file %}
+    <div class="container name-gatekeeper no-print">
+        <div class="glass-card p-5 text-center" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px;">
+            <h2 class="text-white mb-3"><i class="bi bi-pen-fill text-info me-2"></i>Confirm Your Name</h2>
+            <p class="text-white-50 mb-4">This Is The Name That Will Apprear On The Certificate. <strong>This Cannot Be Changed After Submission.</strong></p>
+            <form method="POST" class="text-start">
+                {% csrf_token %}
+                <input type="hidden" name="confirm_name" value="true">
+                <div class="mb-3">
+                    <input type="text" name="first_name" class="form-control form-control-lg bg-dark text-white border-secondary" required placeholder="First Name" value="{{ user.first_name }}">
+                </div>
+                <div class="mb-4">
+                    <input type="text" name="last_name" class="form-control form-control-lg bg-dark text-white border-secondary" required placeholder="Last Name" value="{{ user.last_name }}">
+                </div>
+                <button type="submit" class="btn btn-info w-100 py-3 fw-bold text-black">CONFIRM NAME</button>
+            </form>
+        </div>
+    </div>
+    
+    {% else %}
+    
+    <div class="container mb-4 no-print text-center">
+        <a href="{% url 'dashboard' %}" class="btn btn-outline-light me-2">
+            <i class="bi bi-arrow-left"></i> Dashboard
+        </a>
+        
+        <button onclick="window.print()" class="btn btn-light fw-bold" style="background-color: white !important; color: black !important; border: 1px solid #ccc;">
+            <i class="bi bi-printer-fill me-2"></i> PRINT
+        </button>
+
+        <a href="{{ cert.pdf_file.url }}" class="btn btn-success fw-bold ms-2" download>
+            <i class="bi bi-download me-2"></i> DOWNLOAD PDF
+        </a>
+    </div>
+
+    <div class="cert-paper">
+        <div class="border-thick">
+            <div class="border-thin"></div>
+            
+            <div class="content-layer">
+                
+                <div class="svg-badge">
+                    <svg viewBox="-10 -20 120 150" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M30 60 L30 110 L50 95 L70 110 L70 60 Z" fill="#003366" />
+                        <path d="M50 5 L61 28 L85 28 L75 50 L85 72 L61 72 L50 95 L39 72 L15 72 L25 50 L15 28 L39 28 Z" fill="#003366" stroke="silver" stroke-width="2"/>
+                        <circle cx="50" cy="50" r="22" fill="#fff" stroke="silver" stroke-width="1"/>
+                        <path d="M50 35 L54 45 L65 45 L56 53 L60 64 L50 56 L40 64 L44 53 L35 45 L46 45 Z" fill="#003366" />
+                    </svg>
+                </div>
+
+                <div class="header-text">Certificate</div>
+                <div class="sub-header">of Completion</div>
+
+                <div class="action-text">This credential is presented to</div>
+                <div class="candidate-name">{{ cert.user.first_name|title }} {{ cert.user.last_name|title }}</div>
+
+                <div class="description">
+                    For Successfully Completing The {{ cert.issued_at.year }} OSHA Compliance Training For
+                </div>
+                
+                <div class="course-title">{{ cert.course.title }}</div>
+
+                <div class="statute-box">
+                    <span class="statute-text">
+                        {% if "Bloodborne" in cert.course.title %}OSHA 29 CFR 1910.1030
+                        {% elif "Cyber" in cert.course.title %}HICP Sec 405(d) & 45 CFR Part 164
+                        {% elif "Sunshine" in cert.course.title %}ACA §6002 & 42 CFR Part 403
+                        {% elif "AdvaMed" in cert.course.title %}AdvaMed Code of Ethics
+                        {% elif "Operating" in cert.course.title or "O.R." in cert.course.title %}AORN Guidelines & OSHA 29 CFR 1910.1030
+                        {% elif "Radiation" in cert.course.title %}OSHA 29 CFR 1910.1096 & 10 CFR Part 20
+                        {% elif "Aseptic" in cert.course.title %}USP General Chapter <797>
+                        {% elif "HIPAA" in cert.course.title %}45 CFR Parts 160 & 164
+                        {% elif "Fire" in cert.course.title %}OSHA 1910.38, NFPA 101 & NFPA 99
+                        {% elif "Electrical" in cert.course.title %}OSHA 1910 Subpart S & NFPA 70
+                        {% else %}JCAHO Standard EC.02.02.01{% endif %}
+                    </span>
+                </div>
+
+                <div class="footer-grid">
+                    <div class="footer-col" style="text-align: left;">
+                        <div class="label">Issued Date</div>
+                        <div class="data">{{ cert.issued_at|date:"F j, Y"|upper }}</div>
+                    </div>
+                    
+                    <div class="footer-col" style="text-align: center;">
+                        <div class="label">Valid Through</div>
+                        <div class="data">{{ cert.issued_at.year|add:"1" }}</div>
+                        <div style="font-size: 0.8rem; color: #003366; margin-top: 10px;">www.FastCredentials.com</div>
+                    </div>
+
+                    <div class="footer-col qr-container">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://fastcredentials.com/verify/{{ cert.cert_id }}" alt="QR" class="qr-img">
+                        <div class="verification-text">ID: {{ cert.cert_id }}</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

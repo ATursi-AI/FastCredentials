@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Certificate of Completion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        @page { size: 11in 8.5in; margin: 0; }
+        
+        /* THE FIX: Force the document to fill the entire page height */
+        html, body { 
+            height: 100%; 
+            margin: 0; 
+            padding: 0; 
+            background: #fff; 
+            font-family: 'Open Sans', sans-serif; 
+            -webkit-print-color-adjust: exact; 
+        }
+        
+        .cert-paper { width: 100%; height: 100%; background: #fff; box-sizing: border-box; padding: 40px; position: relative; }
+        
+        /* Flexbox Centering */
+        .border-thick { 
+            width: 100%; 
+            height: 100%; 
+            border: 5px solid #003366; 
+            box-sizing: border-box; 
+            position: relative; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            padding: 20px; 
+        }
+        
+        .border-thin { position: absolute; top: 5px; left: 5px; right: 5px; bottom: 5px; border: 1px solid #003366; pointer-events: none; }
+        .content-layer { position: relative; z-index: 10; text-align: center; padding-top: 10px; }
+        .svg-badge { width: 100px; height: 100px; margin: 0 auto 10px auto; }
+        .header-text { font-family: 'Cinzel', serif; font-size: 40px; font-weight: 700; text-transform: uppercase; letter-spacing: 5px; color: #111; margin-bottom: 0; line-height: 1.0; }
+        .sub-header { font-family: 'Open Sans', sans-serif; font-size: 14px; text-transform: uppercase; letter-spacing: 3px; color: #666; margin-bottom: 20px; border-bottom: 2px solid #eee; display: inline-block; padding-bottom: 5px; }
+        .action-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 18px; color: #444; margin-bottom: 5px; }
+        .candidate-name { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 700; color: #003366; margin: 5px 0 15px 0; line-height: 1.1; }
+        .description { font-family: 'Open Sans', sans-serif; font-size: 16px; color: #555; max-width: 800px; margin: 0 auto; line-height: 1.4; }
+        .course-title { font-family: 'Cinzel', serif; font-size: 32px; font-weight: 700; color: #000; margin-top: 15px; margin-bottom: 10px; line-height: 1.0; text-transform: uppercase; }
+        .statute-box { background-color: #fcfcfc; border: 2px solid #ddd; display: inline-block; padding: 8px 30px; border-radius: 6px; margin: 10px 0; }
+        .statute-text { font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 14px; color: #222; }
+        .footer-table { width: 100%; margin-top: 30px; border-top: 2px solid #eee; padding-top: 15px; }
+        .label { font-family: 'Open Sans', sans-serif; font-size: 10px; text-transform: uppercase; color: #888; letter-spacing: 1px; margin-bottom: 2px; }
+        .data { font-family: 'Cinzel', serif; font-size: 16px; font-weight: 700; color: #000; }
+        .qr-img { width: 80px; height: 80px; border: 1px solid #ddd; padding: 2px; background: #fff; }
+        .verification-text { font-family: 'Open Sans', sans-serif; font-size: 9px; color: #777; margin-top: 2px; }
+    </style>
+</head>
+<body>
+    <div class="cert-paper">
+        <div class="border-thick">
+            <div class="border-thin"></div>
+            <div class="content-layer">
+                <div class="svg-badge">
+                    <svg viewBox="-10 -20 120 150" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M30 60 L30 110 L50 95 L70 110 L70 60 Z" fill="#003366" />
+                        <path d="M50 5 L61 28 L85 28 L75 50 L85 72 L61 72 L50 95 L39 72 L15 72 L25 50 L15 28 L39 28 Z" fill="#003366" stroke="silver" stroke-width="2"/>
+                        <circle cx="50" cy="50" r="22" fill="#fff" stroke="silver" stroke-width="1"/>
+                        <path d="M50 35 L54 45 L65 45 L56 53 L60 64 L50 56 L40 64 L44 53 L35 45 L46 45 Z" fill="#003366" />
+                    </svg>
+                </div>
+
+                <div class="header-text">Certificate</div>
+                <div class="sub-header">of Completion</div>
+
+                <div class="action-text">This credential is presented to</div>
+                <div class="candidate-name">
+                    {% if cert.user.first_name %}{{ cert.user.first_name|title }} {{ cert.user.last_name|title }}{% else %}{{ cert.user.username|title }}{% endif %}
+                </div>
+
+                <div class="description">
+                    For Successfully Completing The {{ cert.issued_at.year }} OSHA Compliance Training For
+                </div>
+                
+                <div class="course-title">{{ cert.course.title }}</div>
+
+                <div class="statute-box">
+                    <span class="statute-text">
+                        {% if "Bloodborne" in cert.course.title %}OSHA 29 CFR 1910.1030
+                        {% elif "Cyber" in cert.course.title %}HICP Sec 405(d) & 45 CFR Part 164
+                        {% elif "Sunshine" in cert.course.title %}ACA §6002 & 42 CFR Part 403
+                        {% elif "AdvaMed" in cert.course.title %}AdvaMed Code of Ethics
+                        {% elif "Operating" in cert.course.title or "O.R." in cert.course.title %}AORN Guidelines & OSHA 29 CFR 1910.1030
+                        {% elif "Radiation" in cert.course.title %}OSHA 29 CFR 1910.1096 & 10 CFR Part 20
+                        {% elif "Aseptic" in cert.course.title %}USP General Chapter <797>
+                        {% elif "HIPAA" in cert.course.title %}45 CFR Parts 160 & 164
+                        {% elif "Fire" in cert.course.title %}OSHA 1910.38, NFPA 101 & NFPA 99
+                        {% elif "Electrical" in cert.course.title %}OSHA 1910 Subpart S & NFPA 70
+                        {% else %}JCAHO Standard EC.02.02.01{% endif %}
+                    </span>
+                </div>
+
+                <table class="footer-table">
+                    <tr>
+                        <td align="left" width="33%">
+                            <div class="label">Issued Date</div>
+                            <div class="data">{{ cert.issued_at|date:"F j, Y"|upper }}</div>
+                        </td>
+                        <td align="center" width="33%">
+                            <div class="label">Valid Through</div>
+                            <div class="data">{{ cert.issued_at.year|add:"1" }}</div>
+                            <div style="font-size: 12px; color: #003366; margin-top: 5px;">www.FastCredentials.com</div>
+                        </td>
+                        <td align="right" width="33%">
+                            <img src="{{ qr_code_path }}" alt="QR" class="qr-img">
+                            <div class="verification-text">ID: {{ cert.cert_id }}</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
