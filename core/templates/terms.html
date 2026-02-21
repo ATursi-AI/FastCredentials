@@ -1,40 +1,166 @@
 {% extends 'base.html' %}
 
+{% block theme_style %}
+<style>
+    /* --- LEGAL CENTER PREMIUM STYLING --- */
+    .legal-header { 
+        color: var(--primary-brand) !important; 
+        font-weight: 900; 
+        letter-spacing: -2px;
+    }
+
+    /* HIGH-CONTRAST NAV PILLS */
+    .legal-nav-container {
+        display: inline-flex;
+        background: #F1F5F9;
+        padding: 6px;
+        border-radius: 50px;
+        border: 1px solid #E2E8F0;
+    }
+
+    .nav-pills-legal .nav-link {
+        color: var(--primary-brand) !important;
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+        padding: 10px 25px;
+        border-radius: 50px;
+        border: none;
+        transition: 0.3s;
+    }
+
+    .nav-pills-legal .nav-link.active {
+        background: var(--primary-brand) !important;
+        color: #ffffff !important;
+        box-shadow: 0 4px 12px rgba(12, 74, 110, 0.2);
+    }
+
+    /* PREMIUM POLICY BOX */
+    .legal-card {
+        background: #FFFFFF;
+        border-top: 4px solid var(--success-brand);
+        border-radius: 16px;
+        padding: 50px;
+        box-shadow: 0 20px 50px rgba(15, 23, 42, 0.05);
+        border-left: 1px solid #F1F5F9;
+        border-right: 1px solid #F1F5F9;
+        border-bottom: 1px solid #F1F5F9;
+        color: #334155;
+    }
+
+    .legal-card h3 { color: var(--primary-brand); font-weight: 800; margin-bottom: 25px; }
+    .legal-card h5 { color: var(--primary-brand); font-weight: 700; margin-top: 30px; }
+    .legal-card p, .legal-card li { line-height: 1.8; color: #475569; }
+
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--accent-brand);
+        text-decoration: none;
+        font-weight: 800;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        margin-top: 40px;
+        transition: 0.3s;
+    }
+    .back-btn:hover { transform: translateX(-5px); color: var(--primary-brand); }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="container py-5" style="max-width: 800px;">
-    <h1 class="mb-4">Terms of Service</h1>
-    <p class="text-muted">Last Updated: February 6, 2026</p>
+<div class="container py-5" style="max-width: 1000px;">
     
-    <hr class="mb-5">
-
-    <h3>1. Acceptance of Terms</h3>
-    <p>By accessing and using FastCredentials.com ("the Service"), you agree to comply with and be bound by these Terms of Service. If you do not agree to these terms, please do not use the Service.</p>
-
-    <h3 class="mt-4">2. Educational Nature of Services</h3>
-    <p>FastCredentials provides training courses and educational certificates for compliance topics (e.g., OSHA, HIPAA). You acknowledge that:</p>
-    <ul>
-        <li>We are a private training provider, not a government agency.</li>
-        <li>Our certificates verify that you have passed an educational exam on the material.</li>
-        <li>It is your responsibility to verify that our training meets the specific regulatory requirements of your employer or state board.</li>
-    </ul>
-
-    <h3 class="mt-4">3. Access and Expiration</h3>
-    <p><strong>365-Day Access Policy:</strong> When you purchase a course, you are granted access to the training materials and certification exam for a period of 365 days from the date of payment. After 365 days, your access will expire, and you must repurchase the course to recertify.</p>
-
-    <h3 class="mt-4">4. Payments and Refunds</h3>
-    <p>All payments are processed securely via Stripe. Due to the digital nature of our content (immediate access to intellectual property and certification), all sales are final once a certificate has been generated.</p>
-
-    <h3 class="mt-4">5. Limitation of Liability</h3>
-    <p>To the fullest extent permitted by law, FastCredentials shall not be liable for any indirect, incidental, or consequential damages resulting from your use of the Service. We do not guarantee that our certificates will prevent workplace accidents, fines, or legal action against you or your employer.</p>
-
-    <h3 class="mt-4">6. User Conduct</h3>
-    <p>You agree not to share your account credentials or allow others to take exams on your behalf. Violation of this policy will result in immediate termination of your account without refund.</p>
-
-    <h3 class="mt-4">7. Contact Us</h3>
-    <p>If you have questions about these Terms, please contact us at support@fastcredentials.com.</p>
-
-    <div class="mt-5 text-center">
-        <a href="{% url 'home' %}" class="btn btn-outline-dark">Return to Home</a>
+    <div class="text-center mb-5">
+        <h1 class="display-4 legal-header mb-2">LEGAL CENTER</h1>
+        <p class="text-muted fw-bold small text-uppercase letter-spacing-2">Last Updated: February 13, 2026</p>
     </div>
+
+    <div class="text-center mb-5">
+        <div class="legal-nav-container">
+            <ul class="nav nav-pills nav-pills-legal" id="legalTabs" role="tablist">
+                <li class="nav-item">
+                    <button class="nav-link active" id="terms-tab" data-bs-toggle="tab" data-bs-target="#terms" type="button" role="tab">Terms of Service</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" id="privacy-tab" data-bs-toggle="tab" data-bs-target="#privacy" type="button" role="tab">Privacy Policy</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" id="refund-tab" data-bs-toggle="tab" data-bs-target="#refund" type="button" role="tab">Refund Policy</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="legal-card">
+        <div class="tab-content" id="legalTabContent">
+            
+            <div class="tab-pane fade show active" id="terms" role="tabpanel">
+                <h3>Terms of Service</h3>
+                <p>Welcome to FastCredentials.com. By accessing our website and using our services, you agree to comply with and be bound by the following terms and conditions.</p>
+                
+                <h5>1. Educational Compliance Standards</h5>
+                <p>
+                    FastCredentials provides professional educational training designed to meet rigorous compliance standards. This training curriculum meets or exceeds the requirements of <strong>OSHA Standard 29 CFR 1910.1030</strong>, <strong>HIPAA 45 CFR Parts 160, 162, and 164</strong>, and <strong>AHA ECC Guidelines</strong> for didactic instruction.
+                </p>
+                <p>
+                    <strong>Important Disclaimer:</strong> Issued documents are Certificates of Training Compliance verifying didactic knowledge. It is your sole responsibility to verify that online training meets the specific requirements of your employer or licensing board.
+                </p>
+
+                <h5>2. Certification Validity & Renewal</h5>
+                <p>Certificates are valid for the specific period stated on the credential (typically 1 or 2 years). You are responsible for renewals prior to expiration.</p>
+
+                <h5>3. User Identity & Academic Integrity</h5>
+                <p>You certify that you are the registered individual completing the exam without unauthorized assistance. Falsification may result in immediate revocation without refund.</p>
+                
+                <h5>4. Limitation of Liability</h5>
+                <p>Prestige Worldwide AI, Inc. liability is limited to the amount paid for the specific course giving rise to any claim.</p>
+            </div>
+
+            <div class="tab-pane fade" id="privacy" role="tabpanel">
+                <h3>Privacy Policy</h3>
+                <p>Your privacy is critically important to us. This policy details how we collect, use, and protect your personal information.</p>
+
+                <h5>1. Information We Collect</h5>
+                <p>We collect full names, email addresses, and payment confirmations. We do <strong>not</strong> store credit card numbers; all payments are processed securely via Stripe.</p>
+
+                <h5>2. How We Use Your Data</h5>
+                <ul class="mb-4">
+                    <li>Generating and verifying your official Certificate.</li>
+                    <li>Sending compliance renewal reminders.</li>
+                    <li>Processing payments and issuing receipts.</li>
+                </ul>
+
+                <h5>3. Data Sharing</h5>
+                <p>We do NOT sell or trade your personal information. Certification status is only shared with verification systems when you provide your unique Certificate ID.</p>
+            </div>
+
+            <div class="tab-pane fade" id="refund" role="tabpanel">
+                <h3>Refund Policy</h3>
+                <div class="p-3 rounded mb-4" style="background: rgba(16, 185, 129, 0.05); border-left: 4px solid var(--success-brand);">
+                    <strong style="color: var(--success-brand);">100% Satisfaction Guarantee</strong>
+                    <p class="small mb-0 mt-1">Our "Pay After You Pass" model allows you to review material risk-free.</p>
+                </div>
+                
+                <p>While sales are generally final once a certificate is generated, we grant full refunds for technical failures, billing errors, or if an employer refuses to accept the certification (within 30 days with proof of rejection).</p>
+
+                <p class="mt-4">To request a refund, contact <a href="mailto:support@fastcredentials.com" style="color: var(--primary-brand); font-weight: 700;">support@fastcredentials.com</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <a href="{% url 'support' %}" class="back-btn">
+            <i class="bi bi-arrow-left"></i> Back to Support Center
+        </a>
+        
+        <div class="mt-5 text-muted small pt-5">
+            <p class="mb-1 fw-bold text-uppercase">Operated by Prestige Worldwide AI, Inc.</p>
+            <p class="mb-0">210 Atlantic Ave, Lynbrook, NY 11563</p>
+            <p>support@fastcredentials.com</p>
+        </div>
+    </div>
+
 </div>
 {% endblock %}

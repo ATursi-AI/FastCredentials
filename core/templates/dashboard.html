@@ -1,104 +1,112 @@
 {% extends 'base.html' %}
 
-{% block content %}
-<div class="row mb-5 align-items-end">
-    <div class="col-md-8">
-        <h1 class="fw-bold display-5 text-white" style="letter-spacing: -1px; text-shadow: 0 0 10px rgba(255,255,255,0.3);">CREDENTIALS DASHBOARD</h1>
-        <p class="text-white-50 mb-0 text-uppercase small" style="letter-spacing: 2px;">{{ user.username }}</p>
-    </div>
+{% block theme_style %}
+<style>
+    /* --- DASHBOARD SPECIFIC STYLES --- */
+    .dashboard-header {
+        border-bottom: 1px solid #E2E8F0;
+        padding-bottom: 20px;
+        margin-bottom: 40px;
+    }
     
-    <div class="col-md-4 text-md-end mt-3 mt-md-0">
-        <span class="badge bg-black rounded-pill px-4 py-3 fw-bold fs-6" 
-              style="border: 2px solid #39ff14; 
-                      color: #39ff14; 
-                      box-shadow: 0 0 20px #39ff14, inset 0 0 10px rgba(57, 255, 20, 0.3); 
-                      text-shadow: 0 0 8px rgba(57, 255, 20, 0.8);
-                      letter-spacing: 1px;">
-            CREDENTIALS COMPLETED: <span class="text-white" style="text-shadow: 0 0 10px #fff;">{{ completed_count }}</span>
-        </span>
+    /* --- PREMIUM BOX COMPONENT (Inherited DNA) --- */
+    .dashboard-card {
+        background: #FFFFFF;
+        border-radius: 12px;
+        padding: 30px;
+        transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03); 
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #F1F5F9;
+        position: relative;
+    }
+    
+    /* Status-Based Top Borders */
+    .dashboard-card.status-completed { border-top: 4px solid var(--success-brand); }
+    .dashboard-card.status-ready { border-top: 4px solid var(--primary-brand); }
+
+    .dashboard-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 25px 50px rgba(15, 23, 42, 0.1);
+    }
+    
+    .status-badge {
+        font-size: 0.65rem; 
+        font-weight: 800; 
+        letter-spacing: 1px; 
+        padding: 5px 10px; 
+        border-radius: 4px;
+        text-transform: uppercase;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    {% if error %}
+    <div class="alert alert-danger shadow-sm mb-4" role="alert">
+        <h4 class="alert-heading"><i class="bi bi-exclamation-triangle-fill me-2"></i>Payment Error</h4>
+        <p class="mb-0">{{ error }}</p>
     </div>
-</div>
+    {% endif %}
 
-<div class="row g-4">
-    {% for course in courses %}
-    <div class="col-md-6 col-lg-4">
-        <div class="glass-card h-100 p-4 d-flex flex-column" 
-             style="background: #000; 
-                    border: 2px solid {% if course.is_completed %}#39ff14{% elif course.has_paid %}#f4f9fd{% else %}#333{% endif %} !important;
-                    box-shadow: 0 0 15px {% if course.is_completed %}rgba(57, 255, 20, 0.2){% elif course.has_paid %}rgba(244, 249, 253, 0.15){% else %}rgba(0,0,0,0){% endif %};">
-            
-            <div class="d-flex justify-content-between align-items-start mb-3">
-                {% if course.is_completed %}
-                    <span class="badge fw-bold fs-6" 
-                          style="background-color: #39ff14; color: #000000 !important; box-shadow: 0 0 10px #39ff14;">
-                        COMPLETED
-                    </span>
-                    
-                    <div class="position-relative d-inline-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
-                        
-                        <i class="bi bi-patch-check-fill" 
-                           style="font-size: 3.5rem; color: #39ff14; text-shadow: 0 0 15px #39ff14;">
-                        </i>
-                        
-                        <i class="bi bi-check-lg position-absolute top-50 start-50 translate-middle" 
-                           style="font-size: 2rem; color: #000000 !important; -webkit-text-stroke: 1px black;">
-                        </i>
-                        
-                    </div>
-                
-                {% elif course.has_paid %}
-                    <span class="badge fw-bold fs-6 shadow-sm" 
-                          style="background-color: #f4f9fd; color: #000000 !important;">
-                        READY
-                    </span>
-                    <i class="bi bi-unlock-fill text-white fs-5"></i>
-                
-                {% else %}
-                    <span class="badge bg-secondary text-white fw-bold">LOCKED</span>
-                    <i class="bi bi-lock-fill text-secondary fs-5"></i>
-                {% endif %}
-            </div>
-
-            <h5 class="fw-bold mb-2 text-white fs-4">
-                {{ course.title }}
-            </h5>
-            
-            <p class="small text-secondary mb-3 flex-grow-1">{{ course.description|truncatewords:12 }}</p>
-
-            <div class="mt-auto">
-                {% if course.is_completed %}
-                    <a href="{% url 'certificate_view' course.user_cert_id %}" 
-                       class="btn w-100 fw-bold fs-5 mb-2" 
-                       style="background-color: #39ff14; color: #000000 !important; border: none;">
-                        <i class="bi bi-file-earmark-pdf-fill me-2"></i>ACCESS CREDENTIAL
-                    </a>
-                    
-                    <a href="{% url 'course_detail' course.id %}" 
-                       class="btn w-100 btn-sm fw-bold text-white-50" 
-                       style="border: 1px solid #333; background: rgba(255,255,255,0.05);">
-                        <i class="bi bi-book-half me-2"></i>REVIEW MODULE
-                    </a>
-                
-                {% elif course.has_paid %}
-                    <a href="{% url 'course_detail' course.id %}" 
-                       class="btn w-100 fw-bold fs-5" 
-                       style="background-color: #f4f9fd; border: none; color: #000000 !important;">
-                        START MODULE
-                    </a>
-                
-                {% else %}
-                    <a href="{% url 'signup' %}" class="btn btn-outline-secondary w-100 fw-bold fs-6">
-                        UNLOCK COURSE
-                    </a>
-                {% endif %}
-            </div>
+    <div class="row align-items-end dashboard-header">
+        <div class="col-md-8">
+            <h1 class="fw-bold display-6 mb-2" style="color: var(--primary-brand); letter-spacing: -1px;">CREDENTIALS DASHBOARD</h1>
+            <p class="mb-0 text-uppercase small fw-bold" style="color: #64748B; letter-spacing: 2px;">{{ user.username }}</p>
+        </div>
+        
+        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+            <span class="badge rounded-pill px-4 py-3 fw-bold" 
+                  style="background: #ffffff; border: 1px solid #E2E8F0; color: var(--primary-brand); box-shadow: 0 4px 10px rgba(0,0,0,0.03); font-size: 0.8rem; letter-spacing: 1px;">
+                CREDENTIALS COMPLETED: <span style="color: var(--success-brand); font-size: 1rem;">{{ completed_count }}</span>
+            </span>
         </div>
     </div>
-    {% empty %}
-    <div class="col-12 text-center py-5">
-        <h2 class="text-white-50">System Update Required</h2>
-        <p class="text-secondary">No courses found. Check database connection.</p>
+
+    <div class="row g-4">
+        {% for course in courses %}
+        <div class="col-md-6 col-lg-4">
+            <div class="dashboard-card {% if course.is_completed %}status-completed{% else %}status-ready{% endif %}">
+                
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <h5 class="fw-bold fs-4 mb-0 me-3" style="color: var(--primary-brand); line-height: 1.2;">{{ course.title }}</h5>
+                    <span class="badge text-dark fw-bold" style="background-color: {{ course.badge_color }}; font-size: 0.65rem; letter-spacing: 0.5px; white-space: nowrap;">{{ course.badge_text }}</span>
+                </div>
+
+                <div class="mb-3">
+                    {% if course.is_completed %}
+                        <span class="status-badge bg-success text-white">
+                            <i class="bi bi-check-circle-fill me-1"></i>COMPLETED
+                        </span>
+                    {% else %}
+                        <span class="status-badge bg-light text-muted border">
+                            <i class="bi bi-circle me-1"></i>NOT STARTED
+                        </span>
+                    {% endif %}
+                </div>
+
+                <p class="small text-muted mb-4 flex-grow-1">{{ course.description|truncatewords:15 }}</p>
+
+                <div class="mt-auto">
+                    {% if course.is_completed %}
+                        <a href="{% url 'certificate_view' course.user_cert_id %}" class="btn w-100 fw-bold py-3 mb-2 rounded-3 shadow-sm" style="background-color: var(--success-brand); color: #ffffff; border: none;">
+                            <i class="bi bi-file-earmark-pdf-fill me-2"></i>ACCESS CERTIFICATE
+                        </a>
+                        <a href="{% url 'course_detail' course.id %}" class="btn w-100 btn-sm fw-bold text-muted" style="background: transparent;">
+                            Review Training Material
+                        </a>
+                    {% else %}
+                        <a href="{% url 'course_detail' course.id %}" class="btn w-100 fw-bold py-3 rounded-3" style="background-color: var(--primary-brand); color: #ffffff;">
+                            START MODULE &rarr;
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </div>
 {% endblock %}

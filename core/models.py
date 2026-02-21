@@ -4,12 +4,25 @@ import uuid
 import re
 
 class Course(models.Model):
+    CATEGORY_CHOICES = (
+        ('medical', 'Medical & Healthcare'),
+        ('workplace', 'Workplace Compliance'),
+        ('safety', 'Safety & Trade'),
+    )
+    
     title = models.CharField(max_length=200)
     description = models.TextField()
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='medical')
+    # NEW PRIORITY FIELD
+    priority = models.IntegerField(default=0, help_text="Higher number = Shows higher on homepage (e.g. 100 for Top, 0 for standard)")
     duration_minutes = models.IntegerField(default=30)
     icon_name = models.CharField(max_length=50, default='bi-shield-check')
     price = models.DecimalField(max_digits=6, decimal_places=2, default=19.99)
     
+    class Meta:
+        # This automatically sorts them by Priority (High to Low), then A-Z
+        ordering = ['-priority', 'title']
+
     def __str__(self):
         return self.title
 

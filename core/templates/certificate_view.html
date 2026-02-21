@@ -1,291 +1,375 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Certificate: {{ cert.course.title }}{% endblock %}
+
 {% block content %}
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-    /* --- SCREEN CONTAINER --- */
-    .cert-container { 
-        background: radial-gradient(circle at center, #2b2b2b 0%, #111111 100%); 
-        padding: 60px 0; 
+    .cert-container {
+        background: #f0f0f0;
+        padding: 40px 0;
         min-height: 100vh;
+        font-family: 'Times New Roman', Times, serif;
     }
 
-    /* --- THE PAPER --- */
     .cert-paper {
-        width: 100%;
-        max-width: 11in; 
         background: #fff;
-        margin: 0 auto;
-        position: relative;
-        box-sizing: border-box;
-        padding: 40px;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.6); 
-    }
-
-    .border-thick {
+        color: #1a1a1a;
         width: 100%;
-        border: 5px solid #003366; 
-        box-sizing: border-box;
+        max-width: 11in;
+        margin: 0 auto;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        padding: 15px;
         position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 20px 0;
-    }
-    
-    .border-thin {
-        position: absolute;
-        top: 5px; left: 5px; right: 5px; bottom: 5px;
-        border: 1px solid #003366;
-        box-sizing: border-box;
-        pointer-events: none;
     }
 
-    .content-layer {
+    .cert-border-outer { border: 2px solid #1a1a1a; padding: 5px; height: 100%; }
+    .cert-border-inner {
+        border: 5px solid #1a1a1a;
+        padding: 40px;
+        height: 100%;
         position: relative;
-        z-index: 10;
         text-align: center;
-        padding: 10px 50px;
+        background: radial-gradient(circle, #fff 80%, #fcfcfc 100%);
     }
 
-    /* --- VISUALS --- */
-    .svg-badge {
-        width: 130px;
-        height: 130px;
-        margin: 0 auto 15px auto;
-    }
-    .svg-badge svg { width: 100%; height: 100%; overflow: visible; }
-
-    /* --- TYPOGRAPHY --- */
-    .header-text { 
-        font-family: 'Cinzel', serif; 
-        font-size: 3.2rem; 
-        font-weight: 700; 
-        text-transform: uppercase; 
-        letter-spacing: 8px; 
-        color: #111;
-        margin-bottom: 0;
-        line-height: 1.0;
-    }
-
-    .sub-header {
-        font-family: 'Open Sans', sans-serif;
-        font-size: 1.0rem;
-        text-transform: uppercase;
-        letter-spacing: 3px;
-        color: #666;
-        margin-bottom: 25px;
-        border-bottom: 2px solid #eee;
+    .cert-icon-logo {
+        font-size: 5rem;
+        color: #0C4A6E;
+        margin-bottom: 20px;
         display: inline-block;
-        padding-bottom: 5px;
+        filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.1));
     }
-    
-    .action-text {
-        font-family: 'Playfair Display', serif;
-        font-style: italic;
-        font-size: 1.4rem;
-        color: #444;
+
+    .cert-header {
+        font-family: 'Cinzel', serif;
+        font-size: 3rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        margin-bottom: 15px;
+        border-bottom: 3px solid #1a1a1a;
+        display: inline-block;
+        padding-bottom: 10px;
+        color: #1a1a1a;
+    }
+
+    .cert-course-title {
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: #003366;
+        margin-top: 30px;
         margin-bottom: 10px;
     }
 
-    .candidate-name { 
-        font-family: 'Playfair Display', serif; 
-        font-size: 3.5rem; 
-        font-weight: 700; 
-        color: #003366; 
-        margin: 5px 0 15px 0;
-        line-height: 1.1;
-    }
-    
-    .description {
-        font-family: 'Open Sans', sans-serif;
-        font-size: 1.1rem;
+    .cert-certifies {
+        font-size: 1.2rem;
+        font-style: italic;
         color: #555;
-        max-width: 800px;
-        margin: 0 auto;
-        line-height: 1.5;
+        margin: 20px 0;
     }
-    
-    .course-title {
-        font-family: 'Cinzel', serif;
-        font-size: 3.0rem;
+
+    .cert-name {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 3.5rem;
         font-weight: 700;
         color: #000;
-        margin-top: 20px;
-        margin-bottom: 15px;
-        line-height: 1.0;
-        text-transform: uppercase;
-    }
-
-    .statute-box {
-        background-color: #fcfcfc;
-        border: 2px solid #ddd;
+        border-bottom: 1px solid #ccc;
         display: inline-block;
-        padding: 8px 30px;
-        border-radius: 6px;
-        margin: 10px 0;
-    }
-    
-    .statute-text {
-        font-family: 'Open Sans', sans-serif;
-        font-weight: 700;
-        font-size: 1.1rem;
-        color: #222;
+        min-width: 500px;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        line-height: 1.2;
+        letter-spacing: 1px;
     }
 
-    /* --- FOOTER GRID --- */
-    .footer-grid {
+    .cert-body-text {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        max-width: 700px;
+        margin: 0 auto 10px auto;
+    }
+
+    .statute-code {
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: #333;
+        margin-bottom: 40px;
+    }
+
+    .cert-footer {
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
-        width: 100%;
-        margin-top: 30px;
-        border-top: 2px solid #eee;
-        padding-top: 20px;
+        margin-top: 50px;
         text-align: left;
     }
-    
-    .footer-col {
-        width: 33%;
+
+    .footer-label { font-size: 0.8rem; text-transform: uppercase; color: #777; letter-spacing: 1px; }
+    .footer-value {
+        font-size: 1.1rem;
+        font-weight: bold;
+        border-bottom: 1px solid #333;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+        display: inline-block;
+        min-width: 150px;
     }
 
-    .label { font-family: 'Open Sans', sans-serif; font-size: 0.8rem; text-transform: uppercase; color: #888; letter-spacing: 1px; margin-bottom: 5px; }
-    .data { font-family: 'Cinzel', serif; font-size: 1.2rem; font-weight: 700; color: #000; }
-    
-    .qr-container { text-align: right; }
-    .qr-img { width: 90px; height: 90px; border: 1px solid #ddd; padding: 4px; background: #fff; }
-    .verification-text { font-family: 'Open Sans', sans-serif; font-size: 0.7rem; color: #777; margin-top: 5px; }
+    .qr-img { width: 110px; height: 110px; }
 
-    .name-gatekeeper { max-width: 600px; margin: 50px auto; }
+    /* WATERMARK */
+    .preview-overlay {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        z-index: 50; pointer-events: none; overflow: hidden;
+        display: flex; flex-wrap: wrap; justify-content: center; align-content: center;
+        backdrop-filter: blur(2.5px); background: rgba(255, 255, 255, 0.2);
+    }
+    .watermark-tile {
+        font-family: 'Open Sans', sans-serif; font-size: 2rem; font-weight: 900;
+        color: rgba(239, 68, 68, 0.1); text-transform: uppercase;
+        transform: rotate(-25deg); margin: 50px; white-space: nowrap;
+        border: 1px solid rgba(239, 68, 68, 0.1); padding: 10px;
+    }
 
-    /* --- PRINT OPTIMIZATION --- */
+    /* UNLOCK CARD ABOVE CERTIFICATE */
+    .unlock-card {
+        background: #ffffff;
+        border-radius: 20px;
+        border: 1px solid #E2E8F0;
+        padding: 30px 40px;
+        box-shadow: 0 25px 60px rgba(15, 23, 42, 0.12);
+        max-width: 11in;
+        margin: 0 auto 30px auto;
+    }
+    .pricing-option-cert {
+        padding: 15px 20px;
+        border-radius: 12px;
+        border: 1px solid rgba(12, 74, 110, 0.1);
+        transition: transform 0.2s;
+        height: 100%;
+    }
+    .pricing-option-cert:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
+    .best-value-badge-cert {
+        background: #10B981;
+        color: white;
+        font-size: 0.65rem;
+        font-weight: 700;
+        padding: 3px 10px;
+        border-radius: 50px;
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+    }
+    .price-tag-cert { font-size: 2rem; font-weight: 900; color: #0C4A6E; letter-spacing: -1px; line-height: 1; }
+    .price-sub-cert { font-size: 0.75rem; color: #64748B; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+
+    /* FIXED BOTTOM BAR */
+    .action-bar {
+        position: fixed; bottom: 0; left: 0; width: 100%;
+        background: #0F172A; padding: 15px 25px;
+        z-index: 100; border-top: 3px solid #10B981;
+    }
+    .btn-unlock {
+        background-color: #10B981 !important; color: white !important;
+        font-weight: 800; border: none; padding: 12px;
+        border-radius: 10px; transition: 0.3s; text-transform: uppercase;
+    }
+    .btn-unlock:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
     @media print {
         @page { size: landscape; margin: 0; }
-        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
-        body * { visibility: hidden; } 
-        
-        .cert-container { 
-            background: white !important; 
-            padding: 0 !important; 
-            margin: 0 !important; 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; justify-content: center; align-items: center;
-        }
-
+        body * { visibility: hidden; }
+        .cert-container { background: white; padding: 0; margin: 0; min-height: 0; }
         .cert-paper, .cert-paper * { visibility: visible; }
-        
-        .cert-paper { 
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%) scale(0.85);
-            width: 11in; 
-            box-shadow: none !important; 
-            margin: 0 !important;
-            border: none !important;
+        .cert-paper {
+            position: fixed; left: 50%; top: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 100%; max-width: 1100px;
+            box-shadow: none; border: none; padding: 0; margin: 0;
         }
-        
-        .no-print { display: none !important; }
+        .no-print, .action-bar, .preview-overlay { display: none !important; }
+    }
+
+    @media (max-width: 768px) {
+        .unlock-card { padding: 20px 15px; }
+        .cert-name { font-size: 2rem; min-width: 200px; }
+        .cert-header { font-size: 1.8rem; }
+        .cert-course-title { font-size: 1.4rem; }
     }
 </style>
 
 <div class="cert-container">
 
-    {% if not cert.pdf_file %}
-    <div class="container name-gatekeeper no-print">
-        <div class="glass-card p-5 text-center" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px;">
-            <h2 class="text-white mb-3"><i class="bi bi-pen-fill text-info me-2"></i>Confirm Your Name</h2>
-            <p class="text-white-50 mb-4">This Is The Name That Will Apprear On The Certificate. <strong>This Cannot Be Changed After Submission.</strong></p>
-            <form method="POST" class="text-start">
-                {% csrf_token %}
-                <input type="hidden" name="confirm_name" value="true">
-                <div class="mb-3">
-                    <input type="text" name="first_name" class="form-control form-control-lg bg-dark text-white border-secondary" required placeholder="First Name" value="{{ user.first_name }}">
-                </div>
-                <div class="mb-4">
-                    <input type="text" name="last_name" class="form-control form-control-lg bg-dark text-white border-secondary" required placeholder="Last Name" value="{{ user.last_name }}">
-                </div>
-                <button type="submit" class="btn btn-info w-100 py-3 fw-bold text-black">CONFIRM NAME</button>
-            </form>
-        </div>
-    </div>
-    
-    {% else %}
-    
-    <div class="container mb-4 no-print text-center">
-        <a href="{% url 'dashboard' %}" class="btn btn-outline-light me-2">
-            <i class="bi bi-arrow-left"></i> Dashboard
-        </a>
-        
-        <button onclick="window.print()" class="btn btn-light fw-bold" style="background-color: white !important; color: black !important; border: 1px solid #ccc;">
-            <i class="bi bi-printer-fill me-2"></i> PRINT
-        </button>
+    {% if has_paid and cert.pdf_file %}
 
-        <a href="{{ cert.pdf_file.url }}" class="btn btn-success fw-bold ms-2" download>
+    <!-- DOWNLOAD / PRINT BUTTONS -->
+    <div class="container mb-4 no-print text-center">
+        <a href="{{ cert.pdf_file.url }}" download class="btn btn-lg btn-success fw-bold shadow me-2">
             <i class="bi bi-download me-2"></i> DOWNLOAD PDF
         </a>
+        <button onclick="window.print()" class="btn btn-lg btn-outline-dark fw-bold shadow">
+            <i class="bi bi-printer me-2"></i> PRINT
+        </button>
+        <div class="mt-3">
+            <a href="{% url 'dashboard' %}" class="text-muted text-decoration-none small"><i class="bi bi-arrow-left"></i> Back to Dashboard</a>
+        </div>
     </div>
 
+    {% else %}
+    <!-- BACK BUTTON -->
+    <div class="container mb-3 no-print text-center">
+        <a href="javascript:history.back()" class="btn btn-outline-secondary rounded-pill px-4"><i class="bi bi-arrow-left"></i> Back to Results</a>
+    </div>
+    {% endif %}
+
+    {% if not has_paid %}
+    <!-- PROMINENT UNLOCK CARD ABOVE CERTIFICATE -->
+    <div class="container no-print" style="max-width: 11in;">
+        <div class="unlock-card">
+            <div class="text-center mb-4">
+                <div class="d-inline-flex align-items-center gap-2 mb-2">
+                    <i class="bi bi-shield-lock-fill" style="color: #0C4A6E; font-size: 1.5rem;"></i>
+                    <span class="fw-bold" style="color: #0C4A6E; font-size: 1.2rem; letter-spacing: -0.5px;">YOUR CREDENTIAL IS READY</span>
+                </div>
+                <p class="text-muted mb-0 small">You passed. Choose how to unlock your official certificate below.</p>
+            </div>
+
+            <div class="row g-3 align-items-stretch">
+                <!-- SINGLE $19.99 -->
+                <div class="col-md-6">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'create_checkout_session' cert.course.id %}?plan=single" class="text-decoration-none d-block h-100">
+                    {% else %}
+                    <a href="{% url 'signup' %}" class="text-decoration-none d-block h-100">
+                    {% endif %}
+                        <div class="pricing-option-cert" style="background: #F8FAFC;">
+                            <div class="price-sub-cert">Single Certificate</div>
+                            <div class="price-tag-cert">$19.99</div>
+                            <div class="small text-muted mt-1">Unlock this certificate only</div>
+                            <div class="mt-3">
+                                <span class="btn btn-sm w-100 fw-bold text-white" style="background: #0C4A6E; border-radius: 8px; padding: 10px;">
+                                    UNLOCK THIS CERT &rarr;
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- ANNUAL $49.99 -->
+                <div class="col-md-6">
+                    <div class="position-relative h-100">
+                        <span class="best-value-badge-cert">BEST VALUE</span>
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'create_checkout_session' cert.course.id %}?plan=annual" class="text-decoration-none d-block h-100">
+                        {% else %}
+                        <a href="{% url 'signup' %}" class="text-decoration-none d-block h-100">
+                        {% endif %}
+                            <div class="pricing-option-cert" style="background: #F0FDF4; border: 2px solid #10B981;">
+                                <div class="price-sub-cert text-success">Annual Pass</div>
+                                <div class="price-tag-cert">$49.99</div>
+                                <div class="small text-muted mt-1">Unlock <strong>all certificates</strong> for 1 year</div>
+                                <div class="mt-3">
+                                    <span class="btn btn-sm w-100 fw-bold text-white" style="background: #10B981; border-radius: 8px; padding: 10px;">
+                                        UNLOCK ALL CERTS &rarr;
+                                    </span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-3 pt-3 border-top" style="border-color: #F1F5F9 !important;">
+                <span class="small fw-bold" style="color: #0C4A6E; letter-spacing: 2px; font-size: 0.7rem;">
+                    FREE STUDY • FREE TESTING • PAY FOR CREDENTIALS
+                </span>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if not has_paid or cert.pdf_file %}
     <div class="cert-paper">
-        <div class="border-thick">
-            <div class="border-thin"></div>
-            
-            <div class="content-layer">
-                
-                <div class="svg-badge">
-                    <svg viewBox="-10 -20 120 150" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M30 60 L30 110 L50 95 L70 110 L70 60 Z" fill="#003366" />
-                        <path d="M50 5 L61 28 L85 28 L75 50 L85 72 L61 72 L50 95 L39 72 L15 72 L25 50 L15 28 L39 28 Z" fill="#003366" stroke="silver" stroke-width="2"/>
-                        <circle cx="50" cy="50" r="22" fill="#fff" stroke="silver" stroke-width="1"/>
-                        <path d="M50 35 L54 45 L65 45 L56 53 L60 64 L50 56 L40 64 L44 53 L35 45 L46 45 Z" fill="#003366" />
-                    </svg>
+        {% if not has_paid %}
+        <div class="preview-overlay">
+            {% for i in "123456789" %}<div class="watermark-tile">PREVIEW - UNLICENSED</div>{% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="cert-border-outer">
+            <div class="cert-border-inner">
+
+                <i class="bi bi-shield-lock-fill cert-icon-logo"></i>
+
+                <div class="cert-header">Certificate of Completion</div>
+
+                <div class="cert-course-title">{{ cert.course.title }}</div>
+
+                <div class="cert-certifies">This certifies that</div>
+
+                <div class="cert-name">{{ cert.user.first_name|title }} {{ cert.user.last_name|title }}</div>
+
+                <div class="cert-body-text">
+                    Has successfully completed the 2026 OSHA Compliant training requirements.
+                    This credential confirms adherence to the standards set forth by:
                 </div>
 
-                <div class="header-text">Certificate</div>
-                <div class="sub-header">of Completion</div>
-
-                <div class="action-text">This credential is presented to</div>
-                <div class="candidate-name">{{ cert.user.first_name|title }} {{ cert.user.last_name|title }}</div>
-
-                <div class="description">
-                    For Successfully Completing The {{ cert.issued_at.year }} OSHA Compliance Training For
-                </div>
-                
-                <div class="course-title">{{ cert.course.title }}</div>
-
-                <div class="statute-box">
-                    <span class="statute-text">
-                        {% if "Bloodborne" in cert.course.title %}OSHA 29 CFR 1910.1030
-                        {% elif "Cyber" in cert.course.title %}HICP Sec 405(d) & 45 CFR Part 164
-                        {% elif "Sunshine" in cert.course.title %}ACA §6002 & 42 CFR Part 403
-                        {% elif "AdvaMed" in cert.course.title %}AdvaMed Code of Ethics
-                        {% elif "Operating" in cert.course.title or "O.R." in cert.course.title %}AORN Guidelines & OSHA 29 CFR 1910.1030
-                        {% elif "Radiation" in cert.course.title %}OSHA 29 CFR 1910.1096 & 10 CFR Part 20
-                        {% elif "Aseptic" in cert.course.title %}USP General Chapter <797>
-                        {% elif "HIPAA" in cert.course.title %}45 CFR Parts 160 & 164
-                        {% elif "Fire" in cert.course.title %}OSHA 1910.38, NFPA 101 & NFPA 99
-                        {% elif "Electrical" in cert.course.title %}OSHA 1910 Subpart S & NFPA 70
-                        {% else %}JCAHO Standard EC.02.02.01{% endif %}
-                    </span>
+                <div class="statute-code">
+                    {% if "Bloodborne" in cert.course.title %}OSHA 29 CFR 1910.1030
+                    {% elif "HIPAA" in cert.course.title %}45 CFR Part 160 & 164
+                    {% elif "Fire" in cert.course.title %}NFPA 101 Life Safety Code
+                    {% elif "O.R." in cert.course.title %}AORN Guidelines
+                    {% elif "Radiation" in cert.course.title %}OSHA 29 CFR 1910.1096
+                    {% elif "Ethics" in cert.course.title %}AdvaMed Code (Rev. 2022)
+                    {% elif "Patient" in cert.course.title %}CMS 42 CFR 482.13
+                    {% elif "Fraud" in cert.course.title %}31 U.S.C. §§ 3729–3733
+                    {% elif "Complaints" in cert.course.title %}FDA 21 CFR Part 803
+                    {% elif "Cyber" in cert.course.title %}NIST SP 800-66
+                    {% elif "Electrical" in cert.course.title %}OSHA 29 CFR 1910.147
+                    {% elif "Respiratory" in cert.course.title %}OSHA 29 CFR 1910.134
+                    {% else %}JCAHO Standard EC.02.02.01{% endif %}
                 </div>
 
-                <div class="footer-grid">
-                    <div class="footer-col" style="text-align: left;">
-                        <div class="label">Issued Date</div>
-                        <div class="data">{{ cert.issued_at|date:"F j, Y"|upper }}</div>
+                <div class="cert-footer">
+                    <div class="footer-section">
+                        <div class="footer-label">Date Issued</div>
+                        <div class="footer-value">{{ cert.issued_at|date:"F j, Y" }}</div>
+                        <br><br>
+                        <div class="footer-label">Valid For</div>
+                        <div class="footer-value">
+                            {% if "CPR" in cert.course.title or "BLS" in cert.course.title or "Basic Life" in cert.course.title %}
+                                2 Years
+                            {% elif "Forklift" in cert.course.title or "Food" in cert.course.title or "Alcohol" in cert.course.title %}
+                                3 Years
+                            {% else %}
+                                1 Year
+                            {% endif %}
+                        </div>
+                        <br>
+                        <div class="footer-label">Expiration Date</div>
+                        <div class="footer-value">
+                            {% if "CPR" in cert.course.title or "BLS" in cert.course.title or "Basic Life" in cert.course.title %}
+                                {{ cert.issued_at|date:"F j" }}, {% now "Y" as current_year %}{{ cert.issued_at.year|add:2 }}
+                            {% elif "Forklift" in cert.course.title or "Food" in cert.course.title or "Alcohol" in cert.course.title %}
+                                {{ cert.issued_at|date:"F j" }}, {{ cert.issued_at.year|add:3 }}
+                            {% else %}
+                                {{ cert.issued_at|date:"F j" }}, {{ cert.issued_at.year|add:1 }}
+                            {% endif %}
+                        </div>
                     </div>
-                    
-                    <div class="footer-col" style="text-align: center;">
-                        <div class="label">Valid Through</div>
-                        <div class="data">{{ cert.issued_at.year|add:"1" }}</div>
-                        <div style="font-size: 0.8rem; color: #003366; margin-top: 10px;">www.FastCredentials.com</div>
-                    </div>
 
-                    <div class="footer-col qr-container">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://fastcredentials.com/verify/{{ cert.cert_id }}" alt="QR" class="qr-img">
-                        <div class="verification-text">ID: {{ cert.cert_id }}</div>
+                    <div style="text-align: right;">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://fastcredentials.com/verify/{{ cert.cert_id }}"
+                             alt="QR" class="qr-img">
+                        <div style="font-size: 0.7rem; margin-top: 5px; color: #555;">
+                            Cert ID: {{ cert.cert_id }}<br>
+                            Verifiable at FastCredentials.com
+                        </div>
                     </div>
                 </div>
 
@@ -293,5 +377,46 @@
         </div>
     </div>
     {% endif %}
+
+    <!-- BOTTOM PADDING FOR FIXED BAR -->
+    {% if not has_paid %}<div style="height: 100px;"></div>{% endif %}
+
 </div>
+
+{% if not has_paid %}
+<!-- FIXED BOTTOM ACTION BAR -->
+<div class="action-bar no-print">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-5 text-center text-md-start mb-2 mb-md-0">
+                <div class="small text-warning fw-bold"><i class="bi bi-shield-lock-fill me-1"></i>WATERMARKED PREVIEW — NOT VALID FOR COMPLIANCE</div>
+                <div class="text-white-50 small">Unlock to receive your official legal certificate.</div>
+            </div>
+            <div class="col-md-7">
+                <div class="row g-2">
+                    <div class="col-6">
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'create_checkout_session' cert.course.id %}?plan=single" class="btn btn-unlock btn-sm w-100">
+                        {% else %}
+                        <a href="{% url 'signup' %}" class="btn btn-unlock btn-sm w-100">
+                        {% endif %}
+                            THIS CERT — $19.99
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'create_checkout_session' cert.course.id %}?plan=annual" class="btn btn-outline-light btn-sm w-100 fw-bold">
+                        {% else %}
+                        <a href="{% url 'signup' %}" class="btn btn-outline-light btn-sm w-100 fw-bold">
+                        {% endif %}
+                            ALL CERTS — $49.99 ⭐
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
 {% endblock %}

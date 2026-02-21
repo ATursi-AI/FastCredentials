@@ -2,63 +2,143 @@
 
 {% block content %}
 <style>
-    .form-control-custom {
-        background: rgba(255, 255, 255, 0.05) !important;
-        border: 1px solid rgba(255, 255, 255, 0.2) !important;
-        color: white !important;
+    /* Custom Glass Styling */
+    .signup-glass {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 16px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .signup-accent-line {
+        height: 6px;
+        background: linear-gradient(90deg, var(--primary-brand), var(--accent-brand));
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .signup-glass h2, .signup-glass p, .signup-glass label {
+        color: var(--primary-brand) !important;
+    }
+
+    .form-floating > .form-control {
+        background-color: #F8FAFC !important;
+        border: 1px solid #CBD5E1 !important;
+        color: #0F172A !important;
         border-radius: 8px;
-        padding: 12px;
+    }
+    .form-floating > .form-control:focus {
+        border-color: var(--accent-brand) !important;
+        box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.1) !important;
+        background-color: #ffffff !important;
+    }
+    .form-floating > label {
+        color: #64748B !important;
+        padding-left: 1rem;
+    }
+
+    .errorlist {
+        list-style: none;
+        padding: 0;
+        color: #DC2626;
+        font-size: 0.8rem;
+        font-weight: bold;
+        margin-bottom: 5px;
+        text-align: left;
+    }
+
+    /* Eye Icon Styling */
+    .password-toggle {
+        cursor: pointer;
+        color: #64748B;
+        z-index: 10;
+        transition: color 0.2s;
+    }
+    .password-toggle:hover {
+        color: var(--primary-brand);
     }
 </style>
 
-<div class="row justify-content-center py-5">
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 85vh;">
     <div class="col-md-6 col-lg-5">
-        <div class="glass-card p-5" style="border: 2px solid var(--neon-green) !important; box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);">
-            
-            <h2 class="fw-bold text-center text-white mb-2" style="letter-spacing: -1px;">
-                CREATE YOUR ACCOUNT
-            </h2>
-            <p class="text-center fw-bold mb-4 text-uppercase" style="color: var(--neon-green); letter-spacing: 2px; text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);">
-                To Purchase All-Access
-            </p>
+        
+        <div class="signup-glass p-5">
+            <div class="signup-accent-line"></div>
+
+            <div class="text-center mb-4 mt-2">
+                <h2 class="fw-bold mt-2 mb-1" style="letter-spacing: -1px;">CREATE ACCOUNT</h2>
+                <p class="small text-uppercase fw-bold opacity-75" style="letter-spacing: 2px;">To Purchase & Continue</p>
+            </div>
             
             <form method="post" novalidate>
                 {% csrf_token %}
                 
                 {% for field in form %}
-                    <div class="mb-4">
-                        <label class="form-label small text-uppercase fw-bold text-white-50" style="letter-spacing: 1px;">
-                            {{ field.label }}
-                        </label>
+                    <div class="mb-3">
+                        {{ field.errors }}
                         
-                        <div class="auth-input-wrapper">
-                            {{ field.errors }}
+                        <div class="form-floating position-relative">
                             <input type="{{ field.field.widget.input_type }}" 
                                    name="{{ field.name }}" 
-                                   class="form-control form-control-custom w-100"
+                                   class="form-control"
                                    id="{{ field.id_for_label }}"
                                    {% if field.value %}value="{{ field.value }}"{% endif %}
-                                   style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); color: white; padding: 12px; border-radius: 8px;"
+                                   placeholder="{{ field.label }}"
                                    required>
-                        </div>
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
 
+                            {% if field.field.widget.input_type == 'password' %}
+                            <span class="password-toggle position-absolute top-50 end-0 translate-middle-y me-3" 
+                                  onclick="togglePassword('{{ field.id_for_label }}', this)">
+                                <i class="bi bi-eye-slash-fill fs-5"></i>
+                            </span>
+                            {% endif %}
+                        </div>
+                        
                         {% if field.help_text %}
-                            <div style="font-size: 0.75rem; color: rgba(255, 255, 255, 0.6); margin-top: 5px; line-height: 1.2;">
+                            <div class="mt-1 ms-1" style="font-size: 0.75rem; color: #64748B; line-height: 1.2; text-align: left;">
                                 {{ field.help_text|safe }}
                             </div>
                         {% endif %}
                     </div>
                 {% endfor %}
                 
-                <button type="submit" class="btn btn-lg w-100 py-3 fw-bold mt-2 rounded-pill text-black shadow" style="background-color: var(--neon-green); border: none; box-shadow: 0 0 15px rgba(57, 255, 20, 0.4);">
-                    AUTHENTICATE & CONTINUE <i class="bi bi-shield-lock-fill ms-2"></i>
+                <button type="submit" class="btn w-100 py-3 fw-bold text-white shadow-sm mt-3" 
+                        style="background: var(--primary-brand); border-radius: 8px; font-size: 1.1rem; transition: all 0.2s;">
+                    CREATE FREE ACCOUNT
                 </button>
             </form>
             
-            <p class="text-center mt-4 small text-white-50">
-                Already have an account? <a href="{% url 'login' %}" class="text-decoration-none fw-bold" style="color: var(--neon-green);">Log In</a>
-            </p>
+            <div class="text-center mt-4 pt-3 border-top" style="border-color: rgba(0,0,0,0.05) !important;">
+                <p class="small mb-0" style="color: #64748B;">
+                    Already have an account? <a href="{% url 'login' %}" class="text-decoration-none fw-bold" style="color: var(--accent-brand);">Log In</a>
+                </p>
+            </div>
         </div>
+
     </div>
 </div>
+
+<script>
+    function togglePassword(fieldId, iconSpan) {
+        const input = document.getElementById(fieldId);
+        const icon = iconSpan.querySelector('i');
+        
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove('bi-eye-slash-fill');
+            icon.classList.add('bi-eye-fill');
+        } else {
+            input.type = "password";
+            icon.classList.remove('bi-eye-fill');
+            icon.classList.add('bi-eye-slash-fill');
+        }
+    }
+</script>
 {% endblock %}

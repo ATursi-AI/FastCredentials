@@ -27,4 +27,9 @@ urlpatterns = [
     path('accounts/logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
     path('about/', views.about, name='about'),
     path('support/', views.support, name='support'),
+    path('terms/', views.terms, name='terms'),
+    
+    # AI MONITORING
+    path('powered-by-ai/', views.ai_monitoring, name='ai_monitoring'),
+    path('ai-transparency/', views.ai_transparency, name='ai_transparency'),
 ]

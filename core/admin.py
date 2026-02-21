@@ -18,7 +18,8 @@ class QuestionAdmin(admin.ModelAdmin):
     search_fields = ('text',)
 
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ('title', 'duration_minutes') 
+    list_display = ('title', 'priority', 'category', 'duration_minutes')
+    list_editable = ('priority', 'category') # Allows quick editing without opening the record
     inlines = [LessonInline, QuestionInline]
 
 class CertificateAdmin(admin.ModelAdmin):

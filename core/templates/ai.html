@@ -1,0 +1,387 @@
+{% extends 'base.html' %}
+
+{% block title %}AI Powered Compliance Monitoring | FastCredentials{% endblock %}
+{% block meta_description %}The world's first AI-monitored credentialing platform. We watch CDC, OSHA & HHS so your credentials never go out of date.{% endblock %}
+
+{% block theme_style %}
+<style>
+    .monitor-hero { padding: 40px 0 60px; }
+
+    /* MISSION DECK */
+    .mission-deck {
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid #E2E8F0;
+        border-radius: 20px;
+        padding: 50px 60px;
+        box-shadow: 0 25px 60px rgba(15, 23, 42, 0.1);
+        margin-bottom: 40px;
+    }
+
+    /* STAT BOXES */
+    .stat-box {
+        background: #FFFFFF;
+        border-top: 4px solid var(--success-brand);
+        border-radius: 12px;
+        padding: 25px 20px;
+        text-align: center;
+        border-left: 1px solid #F1F5F9;
+        border-right: 1px solid #F1F5F9;
+        border-bottom: 1px solid #F1F5F9;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        height: 100%;
+    }
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: var(--primary-brand);
+        letter-spacing: -2px;
+        line-height: 1;
+    }
+    .stat-label {
+        font-size: 0.7rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: #64748B;
+        margin-top: 5px;
+    }
+
+    /* HOW IT WORKS */
+    .step-card {
+        background: #FFFFFF;
+        border-radius: 12px;
+        padding: 30px 25px;
+        border-left: 1px solid #F1F5F9;
+        border-right: 1px solid #F1F5F9;
+        border-bottom: 1px solid #F1F5F9;
+        border-top: 4px solid var(--accent-brand);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        height: 100%;
+        position: relative;
+    }
+    .step-number {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 3rem;
+        font-weight: 900;
+        color: var(--primary-brand);
+        opacity: 0.05;
+        line-height: 1;
+    }
+
+    /* PREMIUM MONITOR ROW */
+    .monitor-row {
+        background: #FFFFFF;
+        border-top: 4px solid var(--success-brand);
+        border-radius: 12px;
+        padding: 25px 35px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-left: 1px solid #F1F5F9;
+        border-right: 1px solid #F1F5F9;
+        border-bottom: 1px solid #F1F5F9;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        transition: 0.3s;
+    }
+    .monitor-row:hover { transform: translateX(8px); box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08); }
+
+    /* STATUS PANEL */
+    .status-panel {
+        background: #0F172A;
+        border-radius: 8px;
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        min-width: 160px;
+    }
+    .status-label { font-family: 'Courier New', monospace; font-size: 0.75rem; color: #94A3B8; font-weight: 800; }
+    
+    .pulse-dot {
+        width: 10px; height: 10px;
+        background: var(--success-brand);
+        border-radius: 50%;
+        box-shadow: 0 0 10px var(--success-brand);
+        animation: pulse-green 1.5s infinite;
+        flex-shrink: 0;
+    }
+    .pulse-dot-sm {
+        width: 6px; height: 6px;
+        background: var(--success-brand);
+        border-radius: 50%;
+        box-shadow: 0 0 8px var(--success-brand);
+        animation: pulse-green 1.5s infinite;
+        flex-shrink: 0;
+        display: inline-block;
+    }
+
+    /* LIVE LOG TERMINAL */
+    .log-terminal {
+        background: #0F172A;
+        color: #10B981;
+        font-family: 'Courier New', monospace;
+        padding: 25px;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        max-height: 400px;
+        overflow-y: auto;
+        border: 4px solid #1E293B;
+        box-shadow: inset 0 2px 20px rgba(0,0,0,0.5);
+    }
+
+    /* PROMISE SECTION */
+    .promise-section {
+        background: var(--primary-brand);
+        border-radius: 20px;
+        padding: 50px 60px;
+        color: white;
+        margin-top: 60px;
+    }
+
+    @keyframes pulse-green {
+        0% { transform: scale(0.9); opacity: 0.7; }
+        50% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 15px var(--success-brand); }
+        100% { transform: scale(0.9); opacity: 0.7; }
+    }
+
+    @media (max-width: 768px) {
+        .mission-deck { padding: 30px 20px; }
+        .promise-section { padding: 30px 20px; }
+        .monitor-row { flex-direction: column; gap: 15px; text-align: center; }
+        .monitor-row .d-flex { flex-direction: column; text-align: center; }
+        .monitor-row .d-flex i { margin: 0 0 10px 0 !important; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container monitor-hero">
+
+    <!-- HERO STATEMENT -->
+    <div class="row justify-content-center text-center mb-5">
+        <div class="col-lg-10">
+            <div class="mission-deck">
+                <div class="d-flex align-items-center justify-content-center gap-3 mb-4">
+                    <div class="pulse-dot-sm"></div>
+                    <span class="fw-bold text-success" style="letter-spacing: 2px; font-size: 0.8rem;">SYSTEM STATUS: ACTIVE — MONITORING 24/7</span>
+                </div>
+
+                <h1 class="fw-bold mb-4" style="color: var(--primary-brand); letter-spacing: -2px; font-size: 2.8rem; line-height: 1.1;">
+                    CREDENTIALING JUST ENTERED<br>
+                    <span style="color: var(--success-brand);">A NEW ERA.</span>
+                </h1>
+
+                <p class="lead mb-4" style="color: #334155; max-width: 750px; margin: 0 auto; line-height: 1.8;">
+                    For decades, compliance training worked the same way: take a course, get a certificate, repeat next year. Nobody questioned whether the material was still accurate. Nobody was watching.
+                </p>
+
+                <p class="lead mb-4" style="color: #334155; max-width: 750px; margin: 0 auto; line-height: 1.8;">
+                    <strong style="color: var(--primary-brand);">We changed that.</strong> FastCredentials built the first AI monitoring system in the credentialing industry — a live intelligence engine that watches the CDC, OSHA, and HHS around the clock. When federal guidance changes, our system detects it, updates the affected course material, and automatically notifies every credentialed user. Within hours, not next year.
+                </p>
+
+                <p class="lead" style="color: #334155; max-width: 750px; margin: 0 auto; line-height: 1.8;">
+                    Your credential doesn't just represent what you learned. It represents what is true <em>right now</em>.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- STATS ROW -->
+    <div class="row g-4 mb-5 text-center">
+        <div class="col-6 col-md-3">
+            <div class="stat-box">
+                <div class="stat-number">60s</div>
+                <div class="stat-label">Monitoring Interval</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-box">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Federal Sources Watched</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-box">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Always On</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-box">
+                <div class="stat-number">0</div>
+                <div class="stat-label">Outdated Credentials Issued</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-10">
+            <h2 class="fw-bold mb-2" style="color: var(--primary-brand); letter-spacing: -1px;">HOW IT WORKS</h2>
+            <p class="text-muted mb-4">A system no one else has built. Here's what happens behind the scenes.</p>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="step-card">
+                        <span class="step-number">01</span>
+                        <i class="bi bi-broadcast fs-2 text-info mb-3 d-block"></i>
+                        <h5 class="fw-bold mb-2" style="color: var(--primary-brand);">Continuous Surveillance</h5>
+                        <p class="small text-muted" style="line-height: 1.7;">Our AI engine pings CDC, OSHA, and HHS every 60 seconds — reading federal registers, surveillance reports, and regulatory updates in real time.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="step-card">
+                        <span class="step-number">02</span>
+                        <i class="bi bi-cpu fs-2 text-warning mb-3 d-block"></i>
+                        <h5 class="fw-bold mb-2" style="color: var(--primary-brand);">Intelligent Analysis</h5>
+                        <p class="small text-muted" style="line-height: 1.7;">When a change is detected, our system analyzes which courses are affected, what needs updating, and which credentialed users need to be notified.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="step-card">
+                        <span class="step-number">03</span>
+                        <i class="bi bi-envelope-check fs-2 mb-3 d-block" style="color: var(--success-brand);"></i>
+                        <h5 class="fw-bold mb-2" style="color: var(--primary-brand);">Automatic Notification</h5>
+                        <p class="small text-muted" style="line-height: 1.7;">Course material is updated and an email goes out to every affected user — keeping their credential valid and their practice compliant without lifting a finger.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIVE MONITORING ROWS -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-10">
+            <h2 class="fw-bold mb-2" style="color: var(--primary-brand); letter-spacing: -1px;">LIVE MONITOR STATUS</h2>
+            <p class="text-muted mb-4">Active connections to federal regulatory sources right now.</p>
+
+            <div class="monitor-row">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-activity text-info fs-2 me-4"></i>
+                    <div>
+                        <div class="fw-bold fs-5" style="color: var(--primary-brand);">CDC National Surveillance</div>
+                        <div class="text-muted small">Monitoring NNDSS for Pathogen & Infection Control Updates</div>
+                    </div>
+                </div>
+                <div class="status-panel">
+                    <span class="status-label">UP-TO-DATE</span>
+                    <div class="pulse-dot"></div>
+                </div>
+            </div>
+
+            <div class="monitor-row">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-shield-check text-warning fs-2 me-4"></i>
+                    <div>
+                        <div class="fw-bold fs-5" style="color: var(--primary-brand);">OSHA Federal Register</div>
+                        <div class="text-muted small">Verifying 29 CFR 1910.1030 Bloodborne Pathogen Standards</div>
+                    </div>
+                </div>
+                <div class="status-panel">
+                    <span class="status-label">UP-TO-DATE</span>
+                    <div class="pulse-dot"></div>
+                </div>
+            </div>
+
+            <div class="monitor-row">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-hospital text-danger fs-2 me-4"></i>
+                    <div>
+                        <div class="fw-bold fs-5" style="color: var(--primary-brand);">HHS Breach Portal</div>
+                        <div class="text-muted small">Tracking HIPAA Enforcement Actions & Privacy Rule Updates</div>
+                    </div>
+                </div>
+                <div class="status-panel">
+                    <span class="status-label">UP-TO-DATE</span>
+                    <div class="pulse-dot"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIVE LOG TERMINAL -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-10">
+            <h5 class="fw-bold mb-3" style="color: var(--primary-brand);">LIVE REGULATORY INTELLIGENCE STREAM</h5>
+            <div class="log-terminal" id="logTerminal">
+                {% if live_updates %}
+                    {% for update in live_updates %}
+                        <div class="mb-3 border-bottom border-secondary border-opacity-25 pb-2">
+                            <span style="color: #64748B">[{{ update.date }}]</span>
+                            <span class="badge bg-info text-dark me-2">{{ update.source }}</span>
+                            <a href="{{ update.link }}" target="_blank" style="color: #38bdf8; text-decoration: none;">{{ update.title }}</a>
+                            <div class="mt-1">
+                                <span class="badge bg-success" style="font-size: 0.6rem; opacity: 0.8;">ANALYSIS: NO ACTION REQUIRED</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div style="color: #64748B;">Initializing Encrypted Connection to Federal Sources...</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- THE PROMISE -->
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="promise-section">
+                <div class="row align-items-center">
+                    <div class="col-lg-8 mb-4 mb-lg-0">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="pulse-dot-sm"></div>
+                            <span class="fw-bold" style="letter-spacing: 2px; font-size: 0.75rem; color: var(--success-brand);">OUR COMMITMENT</span>
+                        </div>
+                        <h2 class="fw-bold mb-4" style="letter-spacing: -1px; color: white;">THE CREDENTIAL THAT NEVER GOES STALE.</h2>
+                        <p style="color: rgba(255,255,255,0.8); line-height: 1.8; font-size: 1.05rem;">
+                            Every other credentialing company gives you a certificate and wishes you luck for the next year. We stay on watch. If the rules change, your credential changes with them. If you need to know, we tell you. This is what modern compliance looks like — and we built it first.
+                        </p>
+                        <p style="color: rgba(255,255,255,0.8); line-height: 1.8; font-size: 1.05rem;">
+                            The healthcare professionals, safety officers, and compliance managers who use FastCredentials don't just stay certified. They stay <strong style="color: var(--success-brand);">correct</strong>.
+                        </p>
+                    </div>
+                    <div class="col-lg-4 text-center">
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 30px;">
+                            <i class="bi bi-shield-lock-fill" style="font-size: 4rem; color: var(--success-brand);"></i>
+                            <div class="fw-bold mt-3" style="color: white; font-size: 1.1rem; letter-spacing: -0.5px;">ALWAYS IN COMPLIANCE.</div>
+                            <div class="small mt-1" style="color: rgba(255,255,255,0.5); letter-spacing: 1px;">POWERED BY PRESTIGE AI</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const log = document.getElementById('logTerminal');
+    const sources = [
+        "CDC Surveillance",
+        "OSHA Federal Register",
+        "HHS Breach Portal",
+        "AdvaMed Guidelines",
+        "OSHA 29-CFR-1910"
+    ];
+
+    function addLogEntry() {
+        const time = new Date().toLocaleTimeString('en-US', { hour12: false });
+        const source = sources[Math.floor(Math.random() * sources.length)];
+        const entry = document.createElement('div');
+        entry.style.marginBottom = '5px';
+        entry.innerHTML = `<span style="color: #64748B">[${time}]</span> <span style="color: #38bdf8">${source}</span> → <span style="color: #10B981">NO CHANGES DETECTED</span>`;
+        log.appendChild(entry);
+        if (log.childNodes.length > 12) {
+            log.removeChild(log.childNodes[0]);
+        }
+        log.scrollTop = log.scrollHeight;
+    }
+
+    setInterval(addLogEntry, 4000);
+    setTimeout(addLogEntry, 500);
+    setTimeout(addLogEntry, 1500);
+    setTimeout(addLogEntry, 2500);
+</script>
+{% endblock %}

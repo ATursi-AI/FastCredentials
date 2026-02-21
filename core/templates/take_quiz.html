@@ -1,50 +1,173 @@
 {% extends 'base.html' %}
 
-{% block content %}
-<div class="row justify-content-center">
-    <div class="col-lg-8">
-        
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
-            <h2 class="fw-bold text-white mb-0">Exam: {{ course.title }}</h2>
-            <a href="{% url 'course_detail' course.id %}" class="btn btn-outline-light fw-bold" style="border-width: 2px;">
-                &larr; BACK TO MODULE
-            </a>
-        </div>
+{% block title %}Certification Exam: {{ course.title }}{% endblock %}
 
-        <div class="glass-card p-4 p-md-5" style="border: 1px solid #333;">
-            <form method="post">
-                {% csrf_token %}
-                {% for q in questions %}
-                <div class="mb-5">
-                    <p class="fs-5 fw-bold text-white mb-3">{{ forloop.counter }}. {{ q.text }}</p>
-                    <div class="list-group">
-                        <label class="list-group-item list-group-item-action bg-black text-white border-secondary mb-2 rounded d-flex align-items-center">
-                            <input class="form-check-input me-3 mt-0" type="radio" name="question_{{ q.id }}" value="1" required style="width: 1.2em; height: 1.2em;">
-                            <span>A) {{ q.option_1 }}</span>
-                        </label>
-                        <label class="list-group-item list-group-item-action bg-black text-white border-secondary mb-2 rounded d-flex align-items-center">
-                            <input class="form-check-input me-3 mt-0" type="radio" name="question_{{ q.id }}" value="2" style="width: 1.2em; height: 1.2em;">
-                            <span>B) {{ q.option_2 }}</span>
-                        </label>
-                        <label class="list-group-item list-group-item-action bg-black text-white border-secondary mb-2 rounded d-flex align-items-center">
-                            <input class="form-check-input me-3 mt-0" type="radio" name="question_{{ q.id }}" value="3" style="width: 1.2em; height: 1.2em;">
-                            <span>C) {{ q.option_3 }}</span>
-                        </label>
-                        <label class="list-group-item list-group-item-action bg-black text-white border-secondary mb-2 rounded d-flex align-items-center">
-                            <input class="form-check-input me-3 mt-0" type="radio" name="question_{{ q.id }}" value="4" style="width: 1.2em; height: 1.2em;">
-                            <span>D) {{ q.option_4 }}</span>
-                        </label>
+{% block content %}
+<style>
+    /* EXAM CENTER 2026 BRANDING */
+    body {
+        background-color: #F8FAFC !important;
+        color: #0F172A;
+    }
+
+    .exam-header {
+        font-weight: 900;
+        letter-spacing: -1.5px;
+        color: #0C4A6E !important;
+    }
+
+    /* INSTITUTIONAL EXAM PANEL */
+    .glass-panel {
+        background: #ffffff !important;
+        border: 1px solid #E2E8F0 !important;
+        border-radius: 20px;
+        padding: 50px;
+        box-shadow: 0 10px 40px rgba(15, 23, 42, 0.05);
+    }
+
+    /* QUESTION TEXT */
+    .question-text {
+        color: #0C4A6E !important;
+        font-weight: 800;
+        border-left: 5px solid #06B6D4;
+        padding-left: 20px;
+        margin-bottom: 25px !important;
+    }
+
+    /* SELECTION CARDS */
+    .option-label {
+        background: #ffffff !important;
+        border: 2px solid #F1F5F9 !important;
+        color: #475569 !important;
+        padding: 20px 25px !important;
+        margin-bottom: 15px !important;
+        border-radius: 12px !important;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+    }
+
+    .option-label:hover {
+        background: #F8FAFC !important;
+        border-color: #06B6D4 !important;
+        transform: translateX(5px);
+    }
+
+    /* ACTIVE STATE (When radio is checked) */
+    input[type="radio"]:checked + .option-marker {
+        border-color: #10B981 !important;
+        background-color: #10B981 !important;
+    }
+
+    input[type="radio"]:checked ~ .option-text {
+        color: #0C4A6E !important;
+        font-weight: 700;
+    }
+
+    input[type="radio"]:checked + .option-label, 
+    .option-label:has(input[type="radio"]:checked) {
+        border-color: #10B981 !important;
+        background-color: #F0FDF4 !important;
+    }
+
+    /* CUSTOM RADIO LOOK */
+    .form-check-input {
+        width: 22px;
+        height: 22px;
+        margin-top: 0;
+        cursor: pointer;
+    }
+
+    .form-check-input:checked {
+        background-color: #10B981;
+        border-color: #10B981;
+    }
+
+    /* SUBMIT BUTTON - SUCCESS GREEN */
+    .btn-submit {
+        background: #10B981 !important;
+        border: none;
+        color: white !important;
+        padding: 18px 50px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+        filter: brightness(1.1);
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 gap-3">
+                <div>
+                    <span class="text-primary small fw-bold text-uppercase" style="letter-spacing: 2px;">Provider Compliance Portal</span>
+                    <h1 class="exam-header mb-0">{{ course.title }}</h1>
+                    <p class="text-muted mb-0">Official Certification Examination</p>
+                </div>
+                <a href="{% url 'course_detail' course.id %}" class="btn btn-outline-secondary btn-sm rounded-pill px-4 fw-bold">
+                    <i class="bi bi-journal-text me-2"></i> REVIEW MATERIAL
+                </a>
+            </div>
+
+            <div class="glass-panel">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    {% for item in questions_data %}
+                    <div class="mb-5 pb-4 border-bottom border-light">
+                        <p class="fs-5 question-text">
+                            Question {{ forloop.counter }} of {{ questions_data|length }}
+                        </p>
+                        <h4 class="fw-bold mb-4" style="color: #1E293B;">{{ item.question.text }}</h4>
+                        
+                        <div class="options-container">
+                            {% for opt_text, opt_val in item.options %}
+                            <label class="option-label">
+                                <input class="form-check-input me-3" type="radio" 
+                                       name="question_{{ item.question.id }}" 
+                                       value="{{ opt_val }}" 
+                                       required>
+                                <span class="fs-6 option-text">
+                                    <strong class="me-2 text-primary">
+                                        {% if forloop.counter == 1 %}A) 
+                                        {% elif forloop.counter == 2 %}B) 
+                                        {% elif forloop.counter == 3 %}C) 
+                                        {% elif forloop.counter == 4 %}D) 
+                                        {% endif %}
+                                    </strong>
+                                    {{ opt_text }}
+                                </span>
+                            </label>
+                            {% endfor %}
+                        </div>
                     </div>
-                </div>
-                {% endfor %}
-                
-                <div class="d-grid d-md-block text-md-end">
-                    <button type="submit" class="btn btn-success btn-lg fw-bold px-5 py-3" 
-                            style="background-color: #39ff14; color: black; border: none; box-shadow: 0 0 20px rgba(57, 255, 20, 0.5);">
-                        SUBMIT EXAM
-                    </button>
-                </div>
-            </form>
+                    {% endfor %}
+                    
+                    <div class="pt-4 d-flex flex-column flex-md-row justify-content-between align-items-center gap-4">
+                        <div class="text-center text-md-start">
+                            <p class="text-success fw-bold mb-0">
+                                <i class="bi bi-shield-lock-fill me-2"></i> SECURE EXAM SESSION ACTIVE
+                            </p>
+                            <p class="text-muted small mb-0">100% Score Required for Certificate Generation</p>
+                        </div>
+                        <button type="submit" class="btn btn-submit">
+                            SUBMIT FINAL ANSWERS <i class="bi bi-arrow-right-circle-fill ms-2"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
         </div>
     </div>
 </div>

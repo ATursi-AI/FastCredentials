@@ -5,6 +5,9 @@ PRODUCTION SECURE MODE
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()  # This loads your secret .env file
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -14,7 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = False
 
 # 2. Keep Secret Key Secret
-SECRET_KEY = 'django-insecure-n_hd2d8^!472+adc1#x7_7@n31xe08_5$u^%c%%7c$^s&fgu+!'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # 3. Allow only your domain
 ALLOWED_HOSTS = ['fastcredentials.com', 'www.fastcredentials.com', '127.0.0.1', 'localhost']
@@ -22,8 +25,13 @@ ALLOWED_HOSTS = ['fastcredentials.com', 'www.fastcredentials.com', '127.0.0.1', 
 # 4. HTTPS Security Settings (Essential for Login)
 CSRF_TRUSTED_ORIGINS = ['https://fastcredentials.com', 'https://www.fastcredentials.com']
 CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_SECURE = True
 SECURE_SSL_REDIRECT = False  # Set to False if Nginx handles SSL (safer to avoid loops)
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
 
 # Application definition
 INSTALLED_APPS = [
@@ -60,6 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'core.context_processors.global_course_list', # <--- ADDED THIS LINE
             ],
         },
     },
@@ -96,13 +105,17 @@ LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'home'
 
 # --- STRIPE SETTINGS ---
-STRIPE_PUBLISHABLE_KEY = 'pk_test_51Suy40Q4Xmiwb7fPUzrhDBkS4TGwJ2ipsHJsEjGw486J1d9WiE90AYloIhQ50yf6V1O9VzTYWEZrL1i3TZdRER1T00YV6UGD7v' 
-STRIPE_SECRET_KEY = 'sk_test_51Suy40Q4Xmiwb7fPpJIzhhYbF860cpZ8XKuohXSpB9VnP0C1hr41n60UMxYhdcplYTau1ml4tdr82lBlXeqpHMS900ZvKF2bqM'
+STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLIC_KEY') 
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
 
-# --- EMAIL SETTINGS (STILL IN CONSOLE MODE) ---
-# We will fix this after your break to make emails actually send.
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'FastCredentials <admin@fastcredentials.com>'
+# Email Configuration (Hostinger SMTP)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.hostinger.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
 X_FRAME_OPTIONS = 'ALLOWALL'
