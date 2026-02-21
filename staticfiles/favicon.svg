@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Shield shape -->
+  <path d="M50 5 L90 20 L90 55 C90 78 72 95 50 105 C28 95 10 78 10 55 L10 20 Z" fill="#0C4A6E"/>
+  <!-- Inner shield green -->
+  <path d="M50 14 L83 27 L83 55 C83 74 67 90 50 99 C33 90 17 74 17 55 L17 27 Z" fill="#10B981"/>
+  <!-- FC Letters -->
+  <text x="50" y="68" 
+        font-family="Arial, sans-serif" 
+        font-weight="900" 
+        font-size="36" 
+        fill="white" 
+        text-anchor="middle"
+        letter-spacing="-2">FC</text>
+</svg>

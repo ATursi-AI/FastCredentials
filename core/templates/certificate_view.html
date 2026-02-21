@@ -9,7 +9,7 @@
 <style>
     .cert-container {
         background: #f0f0f0;
-        padding: 40px 0;
+        padding: 40px 0 0 0;
         min-height: 100vh;
         font-family: 'Times New Roman', Times, serif;
     }
@@ -21,13 +21,14 @@
         max-width: 11in;
         margin: 0 auto;
         box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-        padding: 15px;
+        padding: 0;
         position: relative;
+        overflow: hidden;
     }
 
-    .cert-border-outer { border: 2px solid #1a1a1a; padding: 5px; height: 100%; }
-    .cert-border-inner {
-        border: 5px solid #1a1a1a;
+    .cert-border-outer { border: 3px solid #0C4A6E; padding: 4px; margin: 15px 15px 0 15px; }
+.cert-border-inner {
+    border: 1px solid #0C4A6E;
         padding: 40px;
         height: 100%;
         position: relative;
@@ -301,47 +302,67 @@
         </div>
         {% endif %}
 
+        <!-- GREEN BRAND TOP BAR -->
+        <div style="background: #10B981; padding: 14px 30px; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+                <div style="font-family: Arial, sans-serif; font-weight: 900; font-size: 1.3rem; color: white; letter-spacing: -1px;">FAST<span style="font-weight: 300; opacity: 0.8;">CREDENTIALS</span></div>
+                <div style="font-family: Arial, sans-serif; font-size: 0.5rem; color: rgba(255,255,255,0.85); font-weight: 700; letter-spacing: 3px; text-transform: uppercase;">Powered by Prestige AI</div>
+            </div>
+            <div style="text-align: right;">
+                <div style="font-family: Arial, sans-serif; font-size: 0.65rem; color: rgba(255,255,255,0.9); font-weight: 700; letter-spacing: 1px;">www.FastCredentials.com</div>
+                <div style="font-family: Arial, sans-serif; font-size: 0.5rem; color: rgba(255,255,255,0.8); font-weight: 700; letter-spacing: 2px; text-transform: uppercase;">AI-Monitored Compliance Credentialing</div>
+            </div>
+        </div>
+
         <div class="cert-border-outer">
             <div class="cert-border-inner">
 
-                <i class="bi bi-shield-lock-fill cert-icon-logo"></i>
+                <!-- BRANDED SHIELD -->
+                <div style="width: 80px; height: 80px; margin: 0 auto 15px auto;">
+                    <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M50 5 L90 20 L90 55 C90 80 70 100 50 115 C30 100 10 80 10 55 L10 20 Z" fill="#0C4A6E"/>
+                        <path d="M50 15 L82 28 L82 55 C82 76 65 94 50 107 C35 94 18 76 18 55 L18 28 Z" fill="#10B981"/>
+                        <path d="M35 55 L45 65 L68 42" stroke="white" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
 
-                <div class="cert-header">Certificate of Completion</div>
+                <div class="cert-header" style="color: #0C4A6E; border-bottom: 3px solid #10B981;">Certificate of Completion</div>
 
                 <div class="cert-course-title">{{ cert.course.title }}</div>
 
-                <div class="cert-certifies">This certifies that</div>
+                <div class="cert-certifies">This credential is presented to</div>
 
                 <div class="cert-name">{{ cert.user.first_name|title }} {{ cert.user.last_name|title }}</div>
 
                 <div class="cert-body-text">
-                    Has successfully completed the 2026 OSHA Compliant training requirements.
+                    For successfully meeting the educational and compliance standards required for this course.
                     This credential confirms adherence to the standards set forth by:
                 </div>
 
-                <div class="statute-code">
+                <div class="statute-code" style="background: #F0FDF4; border: 2px solid #10B981; border-radius: 8px; padding: 8px 30px; display: inline-block; color: #0C4A6E;">
                     {% if "Bloodborne" in cert.course.title %}OSHA 29 CFR 1910.1030
-                    {% elif "HIPAA" in cert.course.title %}45 CFR Part 160 & 164
-                    {% elif "Fire" in cert.course.title %}NFPA 101 Life Safety Code
-                    {% elif "O.R." in cert.course.title %}AORN Guidelines
-                    {% elif "Radiation" in cert.course.title %}OSHA 29 CFR 1910.1096
-                    {% elif "Ethics" in cert.course.title %}AdvaMed Code (Rev. 2022)
-                    {% elif "Patient" in cert.course.title %}CMS 42 CFR 482.13
-                    {% elif "Fraud" in cert.course.title %}31 U.S.C. §§ 3729–3733
-                    {% elif "Complaints" in cert.course.title %}FDA 21 CFR Part 803
-                    {% elif "Cyber" in cert.course.title %}NIST SP 800-66
-                    {% elif "Electrical" in cert.course.title %}OSHA 29 CFR 1910.147
-                    {% elif "Respiratory" in cert.course.title %}OSHA 29 CFR 1910.134
+                    {% elif "HIPAA" in cert.course.title %}45 CFR Parts 160 & 164
+                    {% elif "Fire" in cert.course.title %}OSHA 1910.38, NFPA 101 & NFPA 99
+                    {% elif "O.R." in cert.course.title %}AORN Guidelines & OSHA 29 CFR 1910.1030
+                    {% elif "Radiation" in cert.course.title %}OSHA 29 CFR 1910.1096 & 10 CFR Part 20
+                    {% elif "AdvaMed" in cert.course.title %}AdvaMed Code of Ethics
+                    {% elif "Sunshine" in cert.course.title %}ACA §6002 & 42 CFR Part 403
+                    {% elif "Aseptic" in cert.course.title %}USP General Chapter 797
+                    {% elif "Cyber" in cert.course.title %}HICP Sec 405(d) & 45 CFR Part 164
+                    {% elif "Electrical" in cert.course.title %}OSHA 1910 Subpart S & NFPA 70
+                    {% elif "Conflict" in cert.course.title %}HEAT Method & De-escalation Protocols
+                    {% elif "Lockout" in cert.course.title %}OSHA 29 CFR 1910.147 (LOTO)
+                    {% elif "Slips" in cert.course.title %}ANSI A1264.1 & OSHA 1910.22
                     {% else %}JCAHO Standard EC.02.02.01{% endif %}
                 </div>
 
-                <div class="cert-footer">
+                <div class="cert-footer" style="border-top: 2px solid #10B981; margin-top: 30px; padding-top: 15px;">
                     <div class="footer-section">
-                        <div class="footer-label">Date Issued</div>
-                        <div class="footer-value">{{ cert.issued_at|date:"F j, Y" }}</div>
-                        <br><br>
-                        <div class="footer-label">Valid For</div>
-                        <div class="footer-value">
+                        <div class="footer-label" style="color: #10B981;">Date Issued</div>
+                        <div class="footer-value" style="color: #0C4A6E;">{{ cert.issued_at|date:"F j, Y" }}</div>
+                        <br>
+                        <div class="footer-label" style="color: #10B981;">Valid For</div>
+                        <div class="footer-value" style="color: #0C4A6E;">
                             {% if "CPR" in cert.course.title or "BLS" in cert.course.title or "Basic Life" in cert.course.title %}
                                 2 Years
                             {% elif "Forklift" in cert.course.title or "Food" in cert.course.title or "Alcohol" in cert.course.title %}
@@ -351,10 +372,10 @@
                             {% endif %}
                         </div>
                         <br>
-                        <div class="footer-label">Expiration Date</div>
-                        <div class="footer-value">
+                        <div class="footer-label" style="color: #10B981;">Expiration Date</div>
+                        <div class="footer-value" style="color: #0C4A6E;">
                             {% if "CPR" in cert.course.title or "BLS" in cert.course.title or "Basic Life" in cert.course.title %}
-                                {{ cert.issued_at|date:"F j" }}, {% now "Y" as current_year %}{{ cert.issued_at.year|add:2 }}
+                                {{ cert.issued_at|date:"F j" }}, {{ cert.issued_at.year|add:2 }}
                             {% elif "Forklift" in cert.course.title or "Food" in cert.course.title or "Alcohol" in cert.course.title %}
                                 {{ cert.issued_at|date:"F j" }}, {{ cert.issued_at.year|add:3 }}
                             {% else %}
@@ -363,19 +384,40 @@
                         </div>
                     </div>
 
+                    <div style="text-align: center;">
+                        <div style="background: #10B981; color: white; font-family: Arial; font-weight: 900; font-size: 0.7rem; letter-spacing: 2px; padding: 5px 20px; border-radius: 50px; display: inline-block; margin-bottom: 8px;">
+                            VERIFIED & ACTIVE
+                        </div>
+                        <div style="font-size: 0.7rem; color: #64748B; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Certificate ID</div>
+                        <div style="font-size: 0.8rem; font-weight: 700; color: #0C4A6E;">{{ cert.cert_id }}</div>
+                    </div>
+
                     <div style="text-align: right;">
                         <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://fastcredentials.com/verify/{{ cert.cert_id }}"
-                             alt="QR" class="qr-img">
-                        <div style="font-size: 0.7rem; margin-top: 5px; color: #555;">
-                            Cert ID: {{ cert.cert_id }}<br>
-                            Verifiable at FastCredentials.com
+                             alt="QR" class="qr-img" style="border: 2px solid #10B981; padding: 2px;">
+                        <div style="font-size: 0.65rem; margin-top: 5px; color: #0C4A6E; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+                            Scan QR Code for Verification
+                        </div>
+                        <div style="font-size: 0.6rem; color: #94A3B8; margin-top: 2px;">
+                            fastcredentials.com/verify/{{ cert.cert_id }}
                         </div>
                     </div>
                 </div>
 
             </div>
         </div>
-    </div>
+
+        <!-- NAVY BOTTOM BAR -->
+        <div style="background: #0C4A6E; padding: 8px 30px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+            <span style="font-family: Arial; font-size: 0.5rem; color: rgba(255,255,255,0.7); font-weight: 700; letter-spacing: 2px; text-transform: uppercase;">Free Study</span>
+            <span style="color: #10B981;">●</span>
+            <span style="font-family: Arial; font-size: 0.5rem; color: rgba(255,255,255,0.7); font-weight: 700; letter-spacing: 2px; text-transform: uppercase;">Free Testing</span>
+            <span style="color: #10B981;">●</span>
+            <span style="font-family: Arial; font-size: 0.5rem; color: rgba(255,255,255,0.7); font-weight: 700; letter-spacing: 2px; text-transform: uppercase;">Pay for Credentials</span>
+            <span style="color: #10B981;">●</span>
+            <span style="font-family: Arial; font-size: 0.5rem; color: rgba(255,255,255,0.7); font-weight: 700; letter-spacing: 2px; text-transform: uppercase;">AI-Monitored 24/7</span>
+        </div>
+                    
     {% endif %}
 
     <!-- BOTTOM PADDING FOR FIXED BAR -->
