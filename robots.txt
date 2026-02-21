@@ -1,5 +1,8 @@
 User-agent: *
 Allow: /
 
+User-agent: meta-externalads
+Disallow:
+
 # Help Google find the map (We will create this map next)
 Sitemap: https://fastcredentials.com/sitemap.xml
