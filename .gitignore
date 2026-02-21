@@ -17,3 +17,5 @@ media/
 
 # Secrets
 .env
+*.sqlite3
+*.tar.gz
