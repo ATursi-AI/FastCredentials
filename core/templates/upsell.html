@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Unlock Your Certificate | FastCredentials{% endblock %}
+
+{% block content %}
+<style>
+    .upsell-container {
+        max-width: 800px;
+        margin: 60px auto;
+    }
+    .upsell-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 25px 60px rgba(15,23,42,0.12);
+        border: 1px solid #E2E8F0;
+    }
+    .option-box {
+        border-radius: 14px;
+        padding: 25px;
+        cursor: pointer;
+        transition: 0.3s;
+        text-decoration: none;
+        display: block;
+        height: 100%;
+    }
+    .option-box:hover { transform: translateY(-4px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+    .option-single {
+        border: 2px solid #E2E8F0;
+        background: #F8FAFC;
+    }
+    .option-annual {
+        border: 2px solid #10B981;
+        background: #F0FDF4;
+    }
+    .price-big { font-size: 2.5rem; font-weight: 900; letter-spacing: -2px; color: #0C4A6E; line-height: 1; }
+    .savings-pill {
+        background: #10B981;
+        color: white;
+        font-size: 0.65rem;
+        font-weight: 800;
+        padding: 4px 12px;
+        border-radius: 50px;
+        letter-spacing: 1px;
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="upsell-container">
+    <div class="upsell-card">
+
+        <!-- HEADER -->
+        <div class="text-center mb-5">
+            <div class="mb-3">
+                <span style="background: #FEF3C7; color: #D97706; font-size: 0.7rem; font-weight: 800; padding: 5px 15px; border-radius: 50px; letter-spacing: 2px;">
+                    ⚡ ONE MOMENT BEFORE YOU PAY
+                </span>
+            </div>
+            <h2 class="fw-bold mb-2" style="color: #0C4A6E; letter-spacing: -1px; font-size: 2rem;">
+                You're about to unlock<br><em style="color: #10B981;">{{ course.title }}</em>
+            </h2>
+            <p class="text-muted">For just $30 more you can unlock <strong>every certificate</strong> we offer for a full year.</p>
+        </div>
+
+        <!-- TWO OPTIONS -->
+        <div class="row g-4 mb-4">
+
+            <!-- SINGLE CERT -->
+            <div class="col-md-6">
+                <a href="{% url 'create_checkout_session' course.id %}?plan=single" class="option-box option-single">
+                    <div class="small text-muted fw-bold text-uppercase mb-2" style="letter-spacing: 1px;">Single Certificate</div>
+                    <div class="price-big">$19.99</div>
+                    <div class="small text-muted mt-2 mb-3">This course only</div>
+                    <ul class="list-unstyled small text-muted">
+                        <li class="mb-1">✓ {{ course.title }}</li>
+                        <li class="mb-1">✓ Instant PDF certificate</li>
+                        <li class="mb-1">✓ QR verification included</li>
+                    </ul>
+                    <div class="mt-3">
+                        <span class="btn w-100 fw-bold" style="background: #0C4A6E; color: white; border-radius: 8px; padding: 12px;">
+                            JUST THIS CERT →
+                        </span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- ANNUAL PASS -->
+            <div class="col-md-6 position-relative">
+                <div class="savings-pill" style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); z-index: 10; white-space: nowrap;">
+                    ★ BEST VALUE — SAVE $430+
+                </div>
+                {% if has_single_payment %}
+                <a href="{% url 'create_checkout_session' course.id %}?plan=upgrade" class="option-box option-annual">
+                    <div class="small text-success fw-bold text-uppercase mb-2" style="letter-spacing: 1px;">Loyalty Upgrade</div>
+                    <div class="price-big" style="color: #10B981;">$30.00</div>
+                    <div class="small text-muted mt-2 mb-3">Since you already paid $19.99</div>
+                {% else %}
+                <a href="{% url 'create_checkout_session' course.id %}?plan=annual" class="option-box option-annual">
+                    <div class="small text-success fw-bold text-uppercase mb-2" style="letter-spacing: 1px;">Annual All-Access Pass</div>
+                    <div class="price-big" style="color: #10B981;">$49.99</div>
+                    <div class="small text-muted mt-2 mb-3">Every certificate for 1 full year</div>
+                {% endif %}
+                    <ul class="list-unstyled small text-muted">
+                        <li class="mb-1">✓ All 24+ courses unlocked</li>
+                        <li class="mb-1">✓ Instant PDF certificates</li>
+                        <li class="mb-1">✓ QR verification included</li>
+                        <li class="mb-1">✓ AI-monitored updates</li>
+                        <li class="mb-1">✓ 1 full year of access</li>
+                    </ul>
+                    <div class="mt-3">
+                        <span class="btn w-100 fw-bold" style="background: #10B981; color: white; border-radius: 8px; padding: 12px;">
+                            UNLOCK EVERYTHING →
+                        </span>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+       <div class="text-center mt-3 pt-3 border-top" style="border-color: #F1F5F9 !important;">
+    <div class="small fw-bold" style="color: #0C4A6E; letter-spacing: 2px; font-size: 0.7rem;">
+        FREE STUDY • FREE TESTING • PAY FOR CREDENTIALS
+    </div>
+    <div class="small text-muted mt-1" style="font-size: 0.7rem;">
+        🔒 Secured by Stripe • Instant PDF delivery • No subscription
+    </div>
+    <div class="mt-2">
+        <a href="{% url 'dashboard' %}" class="small text-muted text-decoration-none">
+            <i class="bi bi-arrow-left me-1"></i> Back to Dashboard
+        </a>
+    </div>
+</div>
+
+    </div>
+</div>
+{% endblock %}

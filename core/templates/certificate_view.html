@@ -244,7 +244,7 @@
                 <!-- SINGLE $19.99 -->
                 <div class="col-md-6">
                     {% if user.is_authenticated %}
-                    <a href="{% url 'create_checkout_session' cert.course.id %}?plan=single" class="text-decoration-none d-block h-100">
+                    <a href="{% url 'upsell' cert.course.id %}" class="text-decoration-none d-block h-100">
                     {% else %}
                     <a href="{% url 'signup' %}" class="text-decoration-none d-block h-100">
                     {% endif %}
@@ -438,7 +438,7 @@
                 <div class="row g-2">
                     <div class="col-6">
                         {% if user.is_authenticated %}
-                        <a href="{% url 'create_checkout_session' cert.course.id %}?plan=single" class="btn btn-unlock btn-sm w-100">
+                        <a href="{% url 'upsell' cert.course.id %}" class="btn btn-unlock btn-sm w-100">
                         {% else %}
                         <a href="{% url 'signup' %}" class="btn btn-unlock btn-sm w-100">
                         {% endif %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Compliance Blog | FastCredentials{% endblock %}
+{% block meta_description %}Expert compliance training guides, HIPAA, OSHA, CPR certification tips and regulatory updates from FastCredentials.{% endblock %}
+
+{% block content %}
+<style>
+    .blog-card {
+        background: white;
+        border-top: 4px solid var(--success-brand);
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        transition: all 0.3s ease;
+        height: 100%;
+        border-left: 1px solid #F1F5F9;
+        border-right: 1px solid #F1F5F9;
+        border-bottom: 1px solid #F1F5F9;
+    }
+    .blog-card:hover { transform: translateY(-6px); box-shadow: 0 25px 50px rgba(15,23,42,0.1); }
+</style>
+
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <span style="background: #F0FDF4; color: #10B981; font-size: 0.7rem; font-weight: 800; padding: 5px 15px; border-radius: 50px; letter-spacing: 2px;">
+            COMPLIANCE INSIGHTS
+        </span>
+        <h1 class="fw-bold mt-3 mb-2" style="color: #0C4A6E; letter-spacing: -1px;">FastCredentials Blog</h1>
+        <p class="text-muted">Expert guides on HIPAA, OSHA, CPR and healthcare compliance training.</p>
+    </div>
+
+    {% if posts %}
+    <div class="row g-4">
+        {% for post in posts %}
+        <div class="col-md-6 col-lg-4">
+            <a href="{% url 'blog_post' post.slug %}" class="text-decoration-none">
+                <div class="blog-card">
+                    <div class="small fw-bold mb-2" style="color: #10B981; letter-spacing: 1px; text-transform: uppercase; font-size: 0.7rem;">
+                        {{ post.created_at|date:"F j, Y" }}
+                    </div>
+                    <h3 class="fw-bold mb-3" style="color: #0C4A6E; font-size: 1.1rem; line-height: 1.3;">{{ post.title }}</h3>
+                    <p class="small text-muted mb-3" style="line-height: 1.6;">{{ post.meta_description }}</p>
+                    <span class="small fw-bold" style="color: #10B981;">READ MORE →</span>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <p class="text-muted">Blog posts coming soon.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -17,7 +17,9 @@ urlpatterns = [
     path('verify/<str:cert_id>/', views.verify_certificate, name='verify_certificate'),
     
     # STRIPE
-    path('checkout/<int:course_id>/', views.create_checkout_session, name='create_checkout_session'),
+    # STRIPE
+path('upsell/<int:course_id>/', views.upsell, name='upsell'),
+path('checkout/<int:course_id>/', views.create_checkout_session, name='create_checkout_session'),
     path('payment-success/', views.payment_success, name='payment_success'),
     path('payment-cancel/', views.payment_cancel, name='payment_cancel'),
     

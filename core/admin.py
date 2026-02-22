@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Course, Question, Certificate, Lesson, Payment
+from .models import BlogPost
 
 class LessonInline(admin.StackedInline):
     model = Lesson
@@ -33,9 +34,16 @@ class PaymentAdmin(admin.ModelAdmin):
     search_fields = ('user__username', 'stripe_charge_id')
     readonly_fields = ('date',)
 
+class BlogPostAdmin(admin.ModelAdmin):
+    list_display = ['title', 'published', 'created_at']
+    list_editable = ['published']
+    prepopulated_fields = {'slug': ('title',)}
+    search_fields = ['title', 'content']
+
 # Register your models
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Certificate, CertificateAdmin)
 admin.site.register(Payment, PaymentAdmin)
 admin.site.register(Question, QuestionAdmin) # Updated to use the custom class
 admin.site.register(Lesson)
+admin.site.register(BlogPost, BlogPostAdmin)

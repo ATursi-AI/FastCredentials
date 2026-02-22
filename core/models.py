@@ -91,3 +91,19 @@ class Payment(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.course.title} ($ {self.amount})"
+
+class BlogPost(models.Model):
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True, max_length=200)
+    meta_description = models.CharField(max_length=160, blank=True)
+    content = models.TextField()
+    published = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    featured_image = models.ImageField(upload_to='blog/', blank=True, null=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.title

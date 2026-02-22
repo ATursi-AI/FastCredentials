@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ post.title }} | FastCredentials Blog{% endblock %}
+{% block meta_description %}{{ post.meta_description }}{% endblock %}
+
+{% block content %}
+<style>
+    .blog-content {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #334155;
+    }
+    .blog-content h2 {
+        color: #0C4A6E;
+        font-weight: 800;
+        margin-top: 40px;
+        margin-bottom: 15px;
+    }
+    .blog-content h3 {
+        color: #0C4A6E;
+        font-weight: 700;
+        margin-top: 30px;
+        margin-bottom: 10px;
+    }
+    .blog-content p { margin-bottom: 20px; }
+    .blog-content ul { margin-bottom: 20px; padding-left: 25px; }
+    .blog-content li { margin-bottom: 8px; }
+</style>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <!-- BACK LINK -->
+            <a href="{% url 'blog_index' %}" class="small text-muted text-decoration-none mb-4 d-block">
+                <i class="bi bi-arrow-left me-1"></i> Back to Blog
+            </a>
+
+            <!-- HEADER -->
+            <div class="mb-4">
+                <div class="small fw-bold mb-2" style="color: #10B981; letter-spacing: 1px; text-transform: uppercase; font-size: 0.7rem;">
+                    {{ post.created_at|date:"F j, Y" }}
+                </div>
+                <h1 class="fw-bold mb-3" style="color: #0C4A6E; letter-spacing: -1px; line-height: 1.2;">{{ post.title }}</h1>
+                <p class="text-muted" style="font-size: 1.1rem;">{{ post.meta_description }}</p>
+                <hr style="border-color: #10B981; border-width: 2px; opacity: 1; width: 60px; margin: 20px 0;">
+            </div>
+
+            <!-- CONTENT -->
+            <div class="blog-content">
+                {{ post.content|safe }}
+            </div>
+
+            <!-- CTA BOX -->
+            <div class="mt-5 p-4 rounded-3 text-center" style="background: #F0FDF4; border: 2px solid #10B981;">
+                <h4 class="fw-bold mb-2" style="color: #0C4A6E;">Ready to get certified?</h4>
+                <p class="text-muted small mb-3">Free study, free testing — pay only for your certificate.</p>
+                <a href="{% url 'home' %}" class="btn fw-bold text-white px-4 py-2" style="background: #10B981; border-radius: 8px;">
+                    VIEW ALL COURSES →
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

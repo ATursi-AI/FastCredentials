@@ -9,7 +9,7 @@ from datetime import timedelta
 import stripe
 import os
 import random
-from .models import Course, Question, Certificate, Payment
+from .models import Course, Lesson, Question, Certificate, Payment, BlogPost
 from .utils import generate_certificate_pdf
 from .forms import CertificateSignupForm
 
@@ -135,6 +135,18 @@ def certificate_view(request, cert_id):
         cert.save()
         return redirect('certificate_view', cert_id=cert_id)
     return render(request, 'certificate_view.html', {'cert': cert, 'has_paid': has_paid, 'expire_date': cert.issued_at + timedelta(days=365)})
+
+def upsell(request, course_id):
+    if not request.user.is_authenticated:
+        return redirect(f"/signup/?next=/upsell/{course_id}/")
+    course = get_object_or_404(Course, id=course_id)
+    has_single_payment = Payment.objects.filter(user=request.user, amount=19.99).exists()
+    upgrade_price = 30 if has_single_payment else None
+    return render(request, 'upsell.html', {
+        'course': course,
+        'has_single_payment': has_single_payment,
+        'upgrade_price': upgrade_price,
+    })
 
 @login_required
 def create_checkout_session(request, course_id):
@@ -275,3 +287,11 @@ def verify_certificate(request, cert_id):
 
 def ai_transparency(request):
     return render(request, 'ai_transparency.html')
+
+def blog_index(request):
+    posts = BlogPost.objects.filter(published=True)
+    return render(request, 'blog_index.html', {'posts': posts})
+
+def blog_post(request, slug):
+    post = get_object_or_404(BlogPost, slug=slug, published=True)
+    return render(request, 'blog_post.html', {'post': post})
