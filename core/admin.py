@@ -27,6 +27,15 @@ class CertificateAdmin(admin.ModelAdmin):
     list_display = ('cert_id', 'user', 'course', 'issued_at')
     readonly_fields = ('cert_id', 'issued_at')
     search_fields = ('user__username', 'cert_id')
+    actions = ['regenerate_pdf']
+
+    def regenerate_pdf(self, request, queryset):
+        from .utils import generate_certificate_pdf
+        for cert in queryset:
+            cert.pdf_file = generate_certificate_pdf(cert)
+            cert.save()
+        self.message_user(request, f"Successfully regenerated {queryset.count()} certificate(s).")
+    regenerate_pdf.short_description = "Regenerate PDF with current name"
 
 class PaymentAdmin(admin.ModelAdmin):
     list_display = ('user', 'course', 'amount', 'date', 'stripe_charge_id')

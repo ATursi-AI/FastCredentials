@@ -27,10 +27,11 @@
     }
 
     .accordion-button:not(.collapsed) {
-        background: #F1F5F9 !important;
-        color: #06B6D4 !important;
-        border-bottom: 1px solid #E2E8F0 !important;
+    background: #F0FDF4 !important;
+    color: #10B981 !important;
+    border-bottom: 2px solid #10B981 !important;
     }
+    
 
     .accordion-body { color: #334155 !important; line-height: 1.8; background: #ffffff; }
 
@@ -92,12 +93,21 @@
         </div>
 
         <div class="col-lg-4">
-            <div class="card action-card sticky-top" style="top: 140px;">
-                <div class="card-body p-4 text-center">
-                    <h5 class="fw-bold" style="color: #0C4A6E;">Ready to Certify?</h5>
-                    <a href="{% url 'take_quiz' course.id %}" class="btn btn-exam w-100 mt-3">START EXAM</a>
-                </div>
-            </div>
+           <div class="card action-card sticky-top" style="top: 140px;">
+    <div class="card-body p-4 text-center">
+        <div class="mb-2">
+            <i class="bi {{ course.icon_name }}" style="font-size: 2.5rem; color: #10B981;"></i>
+        </div>
+        <h5 class="fw-bold mb-1" style="color: #0C4A6E;">Ready to Earn Your Certificate?</h5>
+        <p class="small text-muted mb-3">You've studied the material. The exam is free — pay only when you pass.</p>
+        <a href="{% url 'take_quiz' course.id %}" class="btn btn-exam w-100">
+            <i class="bi bi-patch-check-fill me-2"></i>START FREE EXAM →
+        </a>
+        <div class="mt-3 small text-muted">
+            <i class="bi bi-lock-fill me-1" style="color: #10B981;"></i>Instant PDF certificate upon payment
+        </div>
+    </div>
+</div>
         </div>
     </div>
 </div>

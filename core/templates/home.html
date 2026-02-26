@@ -173,7 +173,7 @@
             </div>
             <div class="text-center mt-3 pt-2 border-top" style="border-color: rgba(12, 74, 110, 0.1) !important;">
                 <div class="fw-bold small" style="color: var(--primary-brand); letter-spacing: 2px; font-size: 0.75rem;">
-                    FREE STUDY • FREE TESTING • TAKE UNTIL PASS • PAY FOR CREDENTIALS 
+                    FREE STUDY • FREE TESTING • TAKE UNTIL PASS • PAY FOR CREDENTIALS • INSTANT DOWNLOAD
                 </div>
             </div>
         </div>
@@ -200,13 +200,14 @@
                 {% if course.category == 'medical' %}
                 <div class="col-md-6 col-lg-4">
                     <a href="{% url 'course_detail' course.id %}" class="box-component">
-                        <span class="card-number">{{ forloop.counter|stringformat:"02d" }}</span>
+                        <i class="bi {{ course.icon_name }} card-number" style="font-size: 2rem; opacity: 1.0; color: #10B981;"></i>
                         <div class="mb-2">
                             <span class="badge" style="background-color: {{ course.badge_color|default:'#0C4A6E' }}; font-size: 0.7rem; letter-spacing: 1px;">
                                 {{ course.badge_text|default:'ANNUAL REQ' }}
                             </span>
                         </div>
-                        <div class="fw-bold mb-3" style="color: var(--primary-brand); font-size: 1.25rem; line-height: 1.2;">{{ course.title }}</div>
+                        
+<div class="fw-bold mb-3" style="color: var(--primary-brand); font-size: 1.25rem; line-height: 1.2;">{{ course.title }}</div>
                         <div class="small text-muted mb-4" style="line-height: 1.6;">{{ course.description|truncatewords:20 }}</div>
                         <div class="mt-auto pt-2 text-end">
                             <span class="badge bg-transparent" style="border: 1px solid var(--accent-brand); color: var(--accent-brand);">START FREE &rarr;</span>
@@ -224,13 +225,14 @@
                 {% if course.category == 'workplace' %}
                 <div class="col-md-6 col-lg-4">
                     <a href="{% url 'course_detail' course.id %}" class="box-component">
-                        <span class="card-number">{{ forloop.counter|stringformat:"02d" }}</span>
+                        <i class="bi {{ course.icon_name }} card-number" style="font-size: 2rem; opacity: 0.15; color: #10B981;"></i>
                         <div class="mb-2">
                             <span class="badge" style="background-color: {{ course.badge_color|default:'#0C4A6E' }}; font-size: 0.7rem; letter-spacing: 1px;">
                                 {{ course.badge_text|default:'ANNUAL REQ' }}
                             </span>
                         </div>
-                        <div class="fw-bold mb-3" style="color: var(--primary-brand); font-size: 1.25rem;">{{ course.title }}</div>
+                        
+<div class="fw-bold mb-3" style="color: var(--primary-brand); font-size: 1.25rem;">{{ course.title }}</div>
                         <div class="small text-muted mb-4">{{ course.description|truncatewords:20 }}</div>
                         <div class="mt-auto pt-2 text-end">
                             <span class="badge bg-transparent" style="border: 1px solid var(--accent-brand); color: var(--accent-brand);">START FREE &rarr;</span>
@@ -248,13 +250,14 @@
                 {% if course.category == 'safety' %}
                 <div class="col-md-6 col-lg-4">
                     <a href="{% url 'course_detail' course.id %}" class="box-component">
-                        <span class="card-number">{{ forloop.counter|stringformat:"02d" }}</span>
+                        <i class="bi {{ course.icon_name }} card-number" style="font-size: 2rem; opacity: 0.15; color: #10B981;"></i>
                         <div class="mb-2">
                             <span class="badge" style="background-color: {{ course.badge_color|default:'#0C4A6E' }}; font-size: 0.7rem; letter-spacing: 1px;">
                                 {{ course.badge_text|default:'ANNUAL REQ' }}
                             </span>
                         </div>
-                        <div class="fw-bold mb-3" style="color: var(--primary-brand); font-size: 1.25rem;">{{ course.title }}</div>
+                        
+<div class="fw-bold mb-3" style="color: var(--primary-brand); font-size: 1.25rem;">{{ course.title }}</div>
                         <div class="small text-muted mb-4">{{ course.description|truncatewords:20 }}</div>
                         <div class="mt-auto pt-2 text-end">
                             <span class="badge bg-transparent" style="border: 1px solid var(--accent-brand); color: var(--accent-brand);">START FREE &rarr;</span>
