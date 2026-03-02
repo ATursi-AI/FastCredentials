@@ -283,7 +283,7 @@ def ai_monitoring(request): return render(request, "ai.html", {"live_updates": f
 
 def verify_certificate(request, cert_id):
     cert = get_object_or_404(Certificate, cert_id=cert_id)
-    return render(request, 'certificate_view.html', {'cert': cert, 'has_paid': True})
+    return render(request, 'verify_certificate.html', {'cert': cert})
 
 def ai_transparency(request):
     return render(request, 'ai_transparency.html')
