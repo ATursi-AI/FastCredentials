@@ -19,3 +19,5 @@ media/
 .env
 *.sqlite3
 *.tar.gz
+blog_log.txt
+backup_db.sh
