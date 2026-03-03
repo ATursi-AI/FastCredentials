@@ -17,7 +17,13 @@ media/
 
 # Secrets
 .env
+.env.*
 *.sqlite3
 *.tar.gz
+*.zip
+*.bak
+*.sql
+db*.sqlite3
 blog_log.txt
 backup_db.sh
+
