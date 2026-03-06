@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin: 0; padding: 0; background-color: #f4f6f9; font-family: Arial, Helvetica, sans-serif;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: #f4f6f9; padding: 30px 0;">
+        <tr>
+            <td align="center">
+                <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                    
+                    <!-- HEADER -->
+                    <tr>
+                        <td style="background-color: #1a56db; padding: 30px; text-align: center;">
+                            <img src="https://fastcredentials.com/static/FC_1200x630.png" alt="FastCredentials" width="220" style="max-width: 220px; height: auto;">
+                        </td>
+                    </tr>
+
+                    <!-- GREETING -->
+                    <tr>
+                        <td style="padding: 35px 40px 10px 40px;">
+                            <h1 style="margin: 0; font-size: 24px; color: #1a1a1a;">Thank You for Your Purchase!</h1>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 10px 40px 25px 40px; font-size: 16px; color: #333333; line-height: 1.6;">
+                            Hi {{ first_name }},<br><br>
+                            Welcome to FastCredentials — you've made a smart investment in your professional compliance.
+                        </td>
+                    </tr>
+
+                    <!-- ORDER SUMMARY -->
+                    <tr>
+                        <td style="padding: 0 40px 25px 40px;">
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0;">
+                                <tr>
+                                    <td style="padding: 20px;">
+                                        <p style="margin: 0 0 6px 0; font-size: 13px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold;">Order Summary</p>
+                                        <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td style="padding: 8px 0; font-size: 15px; color: #1a1a1a; border-bottom: 1px solid #e2e8f0;">{{ plan_name }}</td>
+                                                <td style="padding: 8px 0; font-size: 15px; color: #1a1a1a; text-align: right; border-bottom: 1px solid #e2e8f0;">${{ amount }}</td>
+                                            </tr>
+                                            {% if course_name %}
+                                            <tr>
+                                                <td style="padding: 8px 0; font-size: 14px; color: #64748b;" colspan="2">Course: {{ course_name }}</td>
+                                            </tr>
+                                            {% endif %}
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- PLAN-SPECIFIC CONTENT -->
+                    {% if is_annual %}
+                    <!-- ANNUAL PLAN MESSAGE -->
+                    <tr>
+                        <td style="padding: 0 40px 25px 40px; font-size: 16px; color: #333333; line-height: 1.6;">
+                            You now have <strong>unlimited access to all 24 compliance courses</strong> for a full year. That includes HIPAA, OSHA, Bloodborne Pathogens, CPR/AED, and more — all with certificates included.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0 40px 25px 40px;">
+                            <p style="font-size: 15px; color: #333333; margin: 0 0 12px 0; font-weight: bold;">Here's how to get the most out of your plan:</p>
+                            <table role="presentation" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td style="padding: 6px 0; font-size: 15px; color: #333;">&#10003;&nbsp;&nbsp;Log in to your dashboard and browse all available courses</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 6px 0; font-size: 15px; color: #333;">&#10003;&nbsp;&nbsp;Complete courses at your own pace — study free, test when ready</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 6px 0; font-size: 15px; color: #333;">&#10003;&nbsp;&nbsp;Download your certificates instantly after passing</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 6px 0; font-size: 15px; color: #333;">&#10003;&nbsp;&nbsp;Share with your employer — each cert has a verifiable QR code</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <!-- SINGLE CERTIFICATE MESSAGE -->
+                    <tr>
+                        <td style="padding: 0 40px 25px 40px; font-size: 16px; color: #333333; line-height: 1.6;">
+                            Your <strong>{{ course_name }}</strong> certificate is ready and waiting in your dashboard. Each certificate includes a scannable QR code that employers can use to verify your credentials instantly.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0 40px 25px 40px;">
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: #eff6ff; border-radius: 6px; border-left: 4px solid #1a56db;">
+                                <tr>
+                                    <td style="padding: 18px 20px;">
+                                        <p style="margin: 0 0 6px 0; font-size: 15px; color: #1a56db; font-weight: bold;">Did you know?</p>
+                                        <p style="margin: 0; font-size: 14px; color: #334155; line-height: 1.5;">
+                                            The <strong>Annual Plan ($49.99/yr)</strong> gives you unlimited access to all 24 courses with certificates included. Most professionals need multiple compliance certifications — this plan pays for itself after just 3 courses.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    {% endif %}
+
+                    <!-- CTA BUTTON -->
+                    <tr>
+                        <td style="padding: 5px 40px 30px 40px; text-align: center;">
+                            <a href="https://fastcredentials.com/dashboard/" style="display: inline-block; background-color: #1a56db; color: #ffffff; text-decoration: none; padding: 14px 40px; border-radius: 6px; font-size: 16px; font-weight: bold;">Go to My Dashboard</a>
+                        </td>
+                    </tr>
+
+                    <!-- DIVIDER -->
+                    <tr>
+                        <td style="padding: 0 40px;">
+                            <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 0;">
+                        </td>
+                    </tr>
+
+                    <!-- FOOTER -->
+                    <tr>
+                        <td style="padding: 25px 40px 30px 40px; text-align: center;">
+                            <p style="margin: 0 0 8px 0; font-size: 13px; color: #94a3b8;">
+                                Questions? Reach us at <a href="mailto:support@fastcredentials.com" style="color: #1a56db; text-decoration: none;">support@fastcredentials.com</a>
+                            </p>
+                            <p style="margin: 0; font-size: 12px; color: #94a3b8;">
+                                &copy; {{ year }} FastCredentials &mdash; AI-Powered Compliance Training
+                            </p>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
