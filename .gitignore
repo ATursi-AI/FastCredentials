@@ -28,3 +28,4 @@ blog_log.txt
 backup_db.sh
 
 config/urls.py
+core/templates/admin/
