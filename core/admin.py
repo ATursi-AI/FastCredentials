@@ -31,11 +31,17 @@ class CertificateAdmin(admin.ModelAdmin):
 
     def regenerate_pdf(self, request, queryset):
         from .utils import generate_certificate_pdf
+        import os
+        from django.conf import settings
         for cert in queryset:
+            # Delete old PDF file if it exists
+            if cert.pdf_file:
+                old_path = os.path.join(settings.MEDIA_ROOT, str(cert.pdf_file))
+                if os.path.exists(old_path):
+                    os.remove(old_path)
             cert.pdf_file = generate_certificate_pdf(cert)
             cert.save()
         self.message_user(request, f"Successfully regenerated {queryset.count()} certificate(s).")
-    regenerate_pdf.short_description = "Regenerate PDF with current name"
 
 class PaymentAdmin(admin.ModelAdmin):
     list_display = ('user', 'course', 'amount', 'date', 'stripe_charge_id')

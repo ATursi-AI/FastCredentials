@@ -15,6 +15,11 @@ from .forms import CertificateSignupForm
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
+# Stripe Product Price IDs
+PRICE_SINGLE = 'price_1TAhi49D3Q7H7mowikZeC1NP'    # $19.99 Single Certificate
+PRICE_ANNUAL = 'price_1TAhjt9D3Q7H7mowaMhbwXsv'    # $49.99 Annual All-Access Pass
+PRICE_UPGRADE = 'price_1TAhl59D3Q7H7mowVt3hUrw3'   # $30.00 Upgrade to Annual
+
 def fetch_regulatory_data():
     feeds = {
         'OSHA': 'https://www.federalregister.gov/api/v1/articles.rss?conditions%5Bagencies%5D%5B%5D=occupational-safety-and-health-administration',
@@ -85,19 +90,41 @@ def take_quiz(request, course_id):
     all_questions = list(course.questions.all())
     if request.method == 'POST':
         if 'cert_name' in request.POST:
-            request.session['guest_cert_name'] = request.POST.get('cert_name')
-            return redirect('certificate_view', cert_id=f"PREVIEW-{course.id}")
+            if request.user.is_authenticated:
+                # Save name to account permanently only if not already set
+                # This prevents a user from changing their name after the first certificate
+                if not request.user.first_name:
+                    parts = request.POST.get('cert_name', '').strip().split(' ', 1)
+                    request.user.first_name = parts[0]
+                    request.user.last_name = parts[1] if len(parts) > 1 else ''
+                    request.user.save()
+                cert, _ = Certificate.objects.get_or_create(user=request.user, course=course)
+                return redirect('certificate_view', cert_id=cert.cert_id)
+            else:
+                # Guest user — store name in session for preview
+                request.session['guest_cert_name'] = request.POST.get('cert_name')
+                return redirect('certificate_view', cert_id=f"PREVIEW-{course.id}")
+
         submitted_ids = [int(k.split('_')[1]) for k in request.POST.keys() if k.startswith('question_')]
         score = sum(1 for q in all_questions if q.id in submitted_ids and int(request.POST.get(f'question_{q.id}')) == q.correct_option)
         percentage = (score / len(submitted_ids)) * 100 if submitted_ids else 0
+
         if percentage >= 100:
             if request.user.is_authenticated:
-                cert, _ = Certificate.objects.get_or_create(user=request.user, course=course)
-                return redirect('certificate_view', cert_id=cert.cert_id)
+                if request.user.first_name:
+                    # Already has a name — create cert and go straight to certificate view
+                    cert, _ = Certificate.objects.get_or_create(user=request.user, course=course)
+                    return redirect('certificate_view', cert_id=cert.cert_id)
+                else:
+                    # No name yet — show name entry form before creating certificate
+                    return render(request, 'quiz_result.html', {'course': course, 'passed': True, 'score': 100})
+            # Guest user — store pass in session and show name entry form
             request.session[f'passed_course_{course.id}'] = True
             request.session['latest_passed_course'] = course.title
             return render(request, 'quiz_result.html', {'course': course, 'passed': True, 'score': 100})
+
         return render(request, 'quiz_result.html', {'course': course, 'passed': False, 'score': int(percentage)})
+
     random.shuffle(all_questions)
     questions_data = [{'question': q, 'options': sorted([(q.option_1,1),(q.option_2,2),(q.option_3,3),(q.option_4,4)], key=lambda x: random.random())} for q in all_questions[:10]]
     return render(request, 'take_quiz.html', {'course': course, 'questions_data': questions_data})
@@ -151,33 +178,30 @@ def upsell(request, course_id):
 @login_required
 def create_checkout_session(request, course_id):
     plan_type = request.GET.get('plan', 'single')
-    
-    # 1. Logic for existing users (The $30 Upgrade)
-    has_single_payment = Payment.objects.filter(user=request.user, amount=19.99).exists()
-    
-    if plan_type == 'upgrade' or (plan_type == 'annual' and has_single_payment):
-        price_amount, product_name = 3000, "FastCredentials Upgrade: Annual Pass"
-    elif plan_type == 'annual':
-        price_amount, product_name = 4900, "FastCredentials All-Access Annual Pass"
-    else:
-        course = get_object_or_404(Course, id=course_id)
-        price_amount, product_name = 1999, f"Certification: {course.title}"
 
-    # Use a fallback course_id for Annual payments
+    has_single_payment = Payment.objects.filter(user=request.user, amount=19.99).exists()
+
+    if plan_type == 'upgrade' or (plan_type == 'annual' and has_single_payment):
+        price_id = PRICE_UPGRADE
+        price_amount = 3000
+    elif plan_type == 'annual':
+        price_id = PRICE_ANNUAL
+        price_amount = 4900
+    else:
+        price_id = PRICE_SINGLE
+        price_amount = 1999
+
     target_course_id = course_id if plan_type == 'single' else (Course.objects.first().id if Course.objects.exists() else 1)
 
     try:
         session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
+            customer_email=request.user.email,
             line_items=[{
-                'price_data': {
-                    'currency': 'usd',
-                    'product_data': {'name': product_name},
-                    'unit_amount': price_amount,
-                },
+                'price': price_id,
                 'quantity': 1,
             }],
             mode='payment',
+            allow_promotion_codes=True,
             success_url=request.build_absolute_uri(reverse('payment_success')) + \
                         f'?session_id={{CHECKOUT_SESSION_ID}}&course_id={target_course_id}&amount={price_amount}',
             cancel_url=request.build_absolute_uri(reverse('payment_cancel')),
@@ -195,16 +219,14 @@ def payment_success(request):
     if not session_id or not course_id:
         return redirect('dashboard')
 
-    # Verify the payment with Stripe before recording anything
     try:
         session = stripe.checkout.Session.retrieve(session_id)
     except stripe.error.StripeError:
         return redirect('dashboard')
 
-    # Only create payment record if Stripe confirms it was paid
-    if session.payment_status == 'paid':
+    # Handle both paid and free (coupon = 100% off) orders
+    if session.payment_status in ('paid', 'no_payment_required'):
         course = get_object_or_404(Course, id=course_id)
-        # Prevent duplicate payment records for the same session
         if not Payment.objects.filter(stripe_charge_id=session_id).exists():
             Payment.objects.create(
                 user=request.user,
@@ -218,62 +240,58 @@ def payment_success(request):
 def payment_cancel(request): return redirect('dashboard')
 
 def signup(request):
-    # 1. Grab the plan from the URL if it exists
     url_plan = request.GET.get('plan')
-    
-    # 2. LOGGED IN BYPASS: If logged in, skip signup and go straight to Stripe
+
     if request.user.is_authenticated:
         if url_plan:
-            # Fallback for Course ID if not specified
-            cid = 1 
+            cid = 1
             last_cert = Certificate.objects.filter(user=request.user).last()
             if last_cert: cid = last_cert.course.id
             elif Course.objects.exists(): cid = Course.objects.first().id
-            
             return redirect(reverse('create_checkout_session', kwargs={'course_id': cid}) + f'?plan={url_plan}')
         return redirect('dashboard')
 
-    # 3. If guest, update the session with the new plan choice (flushing the old one)
     if url_plan:
         request.session['pending_plan'] = url_plan
-    
+
     promo_message = f"CONGRATULATIONS! You Passed {request.session.get('latest_passed_course')}. Create account to view certificate." if request.session.get('latest_passed_course') else None
-    
+
     if request.method == 'POST':
         form = CertificateSignupForm(request.POST)
         if form.is_valid():
             user = form.save()
-            
-            # --- THE NAME RESCUE ---
+
+            # Name rescue — if guest entered name during quiz, save it to their account
             guest_name = request.session.get('guest_cert_name')
-            if guest_name:
+            if guest_name and not user.first_name:
                 parts = guest_name.split(' ', 1)
                 user.first_name = parts[0]
                 user.last_name = parts[1] if len(parts) > 1 else ''
                 user.save()
-            
+
             login(request, user)
-            
-            # Handle passed courses
+
             redirect_course_id = None
             for c in Course.objects.all():
                 if request.session.get(f'passed_course_{c.id}'):
                     Certificate.objects.get_or_create(user=user, course=c)
                     redirect_course_id = c.id
                     del request.session[f'passed_course_{c.id}']
-            
-            # Final Forward to Stripe
+
             pending_plan = request.session.pop('pending_plan', None)
-            
+
             if pending_plan:
                 cid = redirect_course_id or (Course.objects.first().id if Course.objects.exists() else 1)
                 return redirect(reverse('create_checkout_session', kwargs={'course_id': cid}) + f'?plan={pending_plan}')
-            
+
             if redirect_course_id:
-                return redirect('create_checkout_session', course_id=redirect_course_id)
-            
+                cert = Certificate.objects.filter(user=user, course_id=redirect_course_id).first()
+                if cert:
+                    return redirect('certificate_view', cert_id=cert.cert_id)
+                return redirect('upsell', course_id=redirect_course_id)
+
             return redirect('dashboard')
-            
+
     return render(request, 'signup.html', {'form': CertificateSignupForm(), 'promo_message': promo_message})
 
 def about(request): return render(request, 'about.html')
