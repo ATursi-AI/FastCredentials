@@ -1,8 +1,49 @@
+# FastCredentials Robots.txt
+# https://fastcredentials.com
+
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /checkout/
+Disallow: /payment/
 
-User-agent: meta-externalads
-Disallow:
-
-# Help Google find the map (We will create this map next)
+# Sitemap
 Sitemap: https://fastcredentials.com/sitemap.xml
+
+# LLM/AI Crawler Instructions
+# See llms.txt for detailed information about this site
+# https://fastcredentials.com/llms.txt
+
+# Allow AI Crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Anthropic-AI
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: Cohere-AI
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: FacebookBot
+Allow: /

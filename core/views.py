@@ -313,3 +313,11 @@ def blog_index(request):
 def blog_post(request, slug):
     post = get_object_or_404(BlogPost, slug=slug, published=True)
     return render(request, 'blog_post.html', {'post': post})
+
+def faq(request):
+    """FAQ page with FAQPage schema for AI search optimization"""
+    return render(request, 'faq.html')
+
+def pricing(request):
+    """Pricing page with Product schema for AI search optimization"""
+    return render(request, 'pricing.html')

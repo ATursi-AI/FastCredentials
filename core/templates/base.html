@@ -6,22 +6,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="cFgEqY-m_S823znuB9EpNx7_KJ66qNa5_p_M1IC8rac" />
     <meta name="description" content="{% block meta_description %}FastCredentials provides frictionless compliance and rapid credentialing solutions.{% endblock %}">
-    <meta property="og:title" content="FastCredentials | Credentialing at the Speed of AI">
-    <meta property="og:description" content="Free training. Pay only for your certificate. HIPAA, OSHA, CPR and more.">
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="{% block og_title %}FastCredentials | Credentialing at the Speed of AI{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Free training. Pay only for your certificate. HIPAA, OSHA, CPR and more.{% endblock %}">
     <meta property="og:image" content="https://fastcredentials.com/static/FC_1200x630.png">
-    <meta property="og:url" content="https://fastcredentials.com">
+    <meta property="og:url" content="https://fastcredentials.com{% block og_url %}{% endblock %}">
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="FastCredentials">
+
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}FastCredentials | Credentialing at the Speed of AI{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Free training. Pay only for your certificate. HIPAA, OSHA, CPR and more.{% endblock %}">
+    <meta name="twitter:image" content="https://fastcredentials.com/static/FC_1200x630.png">
+
+    <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
-<link rel="icon" type="image/png" sizes="96x96" href="/static/favicon-96x96.png">
-<link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
-<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
-<link rel="manifest" href="/static/site.webmanifest">
+    <link rel="icon" type="image/png" sizes="96x96" href="/static/favicon-96x96.png">
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+    <link rel="manifest" href="/static/site.webmanifest">
+
     <title>{% block title %}Free Compliance Training & Instant Certificates Online. HIPAA, OSHA, CPR, BLS, Food Safety & More. Study Free, Pay Only For Your Certificate.{% endblock %} | FastCredentials</title>
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    
+
+    <!-- JSON-LD Organization Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "FastCredentials",
+      "legalName": "Prestige Worldwide AI, Inc.",
+      "url": "https://fastcredentials.com",
+      "logo": "https://fastcredentials.com/static/FC_1200x630.png",
+      "description": "AI-powered healthcare compliance credentialing platform offering free training with paid certification.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "210 Atlantic Ave",
+        "addressLocality": "Lynbrook",
+        "addressRegion": "NY",
+        "postalCode": "11563",
+        "addressCountry": "US"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "url": "https://fastcredentials.com/support/"
+      },
+      "sameAs": []
+    }
+    </script>
+
+    {% block extra_schema %}{% endblock %}
+
     <style>
         :root {
             --primary-brand: #0C4A6E;
@@ -148,9 +189,10 @@
                         <i class="bi bi-grid-fill me-2"></i>COURSES
                     </button>
                     <a href="{% url 'about' %}" class="nav-link-custom">About</a>
+                    <a href="{% url 'pricing' %}" class="nav-link-custom">Pricing</a>
+                    <a href="{% url 'faq' %}" class="nav-link-custom">FAQ</a>
                     <a href="{% url 'support' %}" class="nav-link-custom">Support</a>
-                    <a href="{% url 'ai_monitoring' %}" class="nav-link-custom">AI POWERED</a>
-<a href="{% url 'blog_index' %}" class="nav-link-custom">BLOG</a>
+                    <a href="{% url 'blog_index' %}" class="nav-link-custom">Blog</a>
                     
                     <div class="ms-lg-3 mt-2 mt-lg-0 d-flex align-items-center gap-3">
                         {% if user.is_authenticated %}
@@ -247,10 +289,12 @@
             <div class="mb-5">
                 <a href="{% url 'home' %}" class="footer-link mx-3">Home</a>
                 <a href="{% url 'about' %}" class="footer-link mx-3">About Us</a>
+                <a href="{% url 'pricing' %}" class="footer-link mx-3">Pricing</a>
+                <a href="{% url 'faq' %}" class="footer-link mx-3">FAQ</a>
                 <a href="{% url 'support' %}" class="footer-link mx-3">Support</a>
                 <a href="{% url 'terms' %}" class="footer-link mx-3">Terms & Privacy</a>
                 <a href="{% url 'ai_transparency' %}" class="footer-link mx-3">AI Transparency</a>
-<a href="{% url 'support' %}" class="footer-link mx-3" style="color: #10B981; font-weight: 700;">White Label & Enterprise</a>
+                <a href="{% url 'support' %}" class="footer-link mx-3" style="color: #10B981; font-weight: 700;">White Label & Enterprise</a>
             </div>
 
             <div class="pt-4 border-top border-white border-opacity-10">

@@ -1,0 +1,279 @@
+{% extends 'base.html' %}
+
+{% block title %}Frequently Asked Questions{% endblock %}
+{% block meta_description %}Common questions about FastCredentials compliance training and certification. Learn about pricing, certificate validity, verification, and our AI-powered regulatory monitoring.{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+
+        <div class="text-center mb-5">
+            <h1 class="fw-bold mb-3" style="color: var(--primary-brand); letter-spacing: -1px;">Frequently Asked Questions</h1>
+            <p class="text-muted">Everything you need to know about FastCredentials</p>
+        </div>
+
+        <div class="accordion" id="faqAccordion">
+
+            <!-- Pricing Questions -->
+            <div class="mb-4">
+                <h2 class="h5 fw-bold mb-3" style="color: var(--primary-brand);">
+                    <i class="bi bi-currency-dollar me-2"></i>Pricing & Payment
+                </h2>
+
+                <div class="accordion-item border-0 mb-2" style="background: #f8fafc; border-radius: 12px;">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" style="background: transparent; border-radius: 12px;">
+                            How much does a certificate cost?
+                        </button>
+                    </h3>
+                    <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Single certificates are <strong>$19.99</strong> each. For unlimited access, our Annual All-Access Pass is <strong>$49.99/year</strong> and includes every course on the platform. If you've already purchased a single certificate, you can upgrade to the annual pass for just <strong>$30</strong>.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-2" style="background: #f8fafc; border-radius: 12px;">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" style="background: transparent; border-radius: 12px;">
+                            Is the training really free?
+                        </button>
+                    </h3>
+                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Yes! All training materials and testing are completely free. You can study every course and take every exam at no cost. You only pay when you're ready to download your official, verifiable certificate.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-2" style="background: #f8fafc; border-radius: 12px;">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" style="background: transparent; border-radius: 12px;">
+                            What payment methods do you accept?
+                        </button>
+                    </h3>
+                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            We accept all major credit cards (Visa, Mastercard, American Express, Discover) through our secure Stripe payment processor. All transactions are encrypted and PCI-compliant.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certificate Questions -->
+            <div class="mb-4">
+                <h2 class="h5 fw-bold mb-3" style="color: var(--primary-brand);">
+                    <i class="bi bi-award me-2"></i>Certificates
+                </h2>
+
+                <div class="accordion-item border-0 mb-2" style="background: #f8fafc; border-radius: 12px;">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" style="background: transparent; border-radius: 12px;">
+                            How long are certificates valid?
+                        </button>
+                    </h3>
+                    <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            <ul class="mb-0">
+                                <li><strong>CPR, BLS, Basic Life Support:</strong> 2 years (per AHA guidelines)</li>
+                                <li><strong>Forklift, Food Handler, Alcohol Awareness:</strong> 3 years</li>
+                                <li><strong>All other courses:</strong> 1 year (OSHA/JCAHO standard)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-2" style="background: #f8fafc; border-radius: 12px;">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq5" style="background: transparent; border-radius: 12px;">
+                            Can employers verify my certificate?
+                        </button>
+                    </h3>
+                    <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Yes! Every certificate includes a unique ID and QR code. Employers can instantly verify authenticity at <strong>fastcredentials.com/verify/[certificate_id]</strong>. The verification page confirms the certificate holder's name, course completed, and expiration date.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-2" style="background: #f8fafc; border-radius: 12px;">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq6" style="background: transparent; border-radius: 12px;">
+                            Are these certificates accepted by employers?
+                        </button>
+                    </h3>
+                    <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Our certificates meet regulatory standards for compliance training. Course development practices are aligned with ANSI/IACET Continuing Education & Training Standards. Each certificate includes verification features that employers can use to confirm authenticity.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exam Questions -->
+            <div class="mb-4">
+                <h2 class="h5 fw-bold mb-3" style="color: var(--primary-brand);">
+                    <i class="bi bi-pencil-square me-2"></i>Exams & Testing
+                </h2>
+
+                <div class="accordion-item border-0 mb-2" style="background: #f8fafc; border-radius: 12px;">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq7" style="background: transparent; border-radius: 12px;">
+                            What if I fail the exam?
+                        </button>
+                    </h3>
+                    <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            You can retake the exam as many times as needed for free. There's no penalty for retaking. We want you to master the material, so keep studying and try again until you pass.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-2" style="background: #f8fafc; border-radius: 12px;">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq8" style="background: transparent; border-radius: 12px;">
+                            What score do I need to pass?
+                        </button>
+                    </h3>
+                    <div id="faq8" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            You must score <strong>100%</strong> to pass. This ensures every credential we issue represents genuine mastery of the material, not just participation. The exams test practical knowledge you'll actually use on the job.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-2" style="background: #f8fafc; border-radius: 12px;">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq9" style="background: transparent; border-radius: 12px;">
+                            How long do I have to complete a course?
+                        </button>
+                    </h3>
+                    <div id="faq9" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            There's no time limit. Study at your own pace, take breaks, and come back whenever you're ready. Your progress is saved automatically.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI & Technology Questions -->
+            <div class="mb-4">
+                <h2 class="h5 fw-bold mb-3" style="color: var(--primary-brand);">
+                    <i class="bi bi-robot me-2"></i>AI & Technology
+                </h2>
+
+                <div class="accordion-item border-0 mb-2" style="background: #f8fafc; border-radius: 12px;">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq10" style="background: transparent; border-radius: 12px;">
+                            How does the AI monitoring work?
+                        </button>
+                    </h3>
+                    <div id="faq10" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Our AI system monitors CDC, OSHA, and HHS regulatory feeds in real-time (every 60 seconds). When regulations change, affected course content is automatically flagged for update, and credentialed users are notified by email. This ensures you're always learning current standards.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-2" style="background: #f8fafc; border-radius: 12px;">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq11" style="background: transparent; border-radius: 12px;">
+                            Will I be notified when my certificate expires?
+                        </button>
+                    </h3>
+                    <div id="faq11" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Yes! We send email reminders before your certificates expire so you have time to recertify. You'll also be notified if regulatory changes affect any of your credentials.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CTA Section -->
+        <div class="text-center mt-5 pt-4 border-top">
+            <h3 class="h5 fw-bold mb-3" style="color: var(--primary-brand);">Still have questions?</h3>
+            <p class="text-muted mb-4">Our support team is here to help.</p>
+            <a href="{% url 'support' %}" class="btn px-4 py-2 fw-bold" style="background: var(--success-brand); color: white; border-radius: 50px;">
+                Contact Support
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<!-- FAQPage Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How much does a certificate cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Single certificates are $19.99 each. For unlimited access, our Annual All-Access Pass is $49.99/year and includes every course on the platform. If you've already purchased a single certificate, you can upgrade to the annual pass for just $30."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the training really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! All training materials and testing are completely free. You can study every course and take every exam at no cost. You only pay when you're ready to download your official, verifiable certificate."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long are certificates valid?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "CPR, BLS, and Basic Life Support certificates are valid for 2 years per AHA guidelines. Forklift, Food Handler, and Alcohol Awareness certificates are valid for 3 years. All other courses have 1-year validity per OSHA/JCAHO standards."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can employers verify my certificate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! Every certificate includes a unique ID and QR code. Employers can instantly verify authenticity at fastcredentials.com/verify/[certificate_id]. The verification page confirms the certificate holder's name, course completed, and expiration date."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if I fail the exam?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can retake the exam as many times as needed for free. There's no penalty for retaking. We want you to master the material, so keep studying and try again until you pass."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What score do I need to pass?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You must score 100% to pass. This ensures every credential we issue represents genuine mastery of the material, not just participation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does the AI monitoring work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Our AI system monitors CDC, OSHA, and HHS regulatory feeds in real-time (every 60 seconds). When regulations change, affected course content is automatically flagged for update, and credentialed users are notified by email."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are these certificates accepted by employers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Our certificates meet regulatory standards for compliance training. Course development practices are aligned with ANSI/IACET Continuing Education & Training Standards. Each certificate includes verification features that employers can use to confirm authenticity."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}

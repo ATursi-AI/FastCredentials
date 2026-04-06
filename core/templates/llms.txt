@@ -1,0 +1,96 @@
+# FastCredentials
+
+> AI-powered healthcare compliance credentialing platform offering free training with paid certification.
+
+FastCredentials delivers healthcare compliance training and issues legally valid certificates at a fraction of the cost of legacy credentialing platforms. Free to study, free to test, pay only for your certificate.
+
+## Company Information
+
+- **Business Name:** FastCredentials (Prestige Worldwide AI, Inc.)
+- **Website:** https://fastcredentials.com
+- **Industry:** Healthcare Compliance Training & Credentialing
+- **Location:** 210 Atlantic Ave, Lynbrook, NY 11563
+- **Contact:** support@fastcredentials.com
+
+## Pricing
+
+- Single Certificate: $19.99
+- Annual All-Access Pass: $49.99 (unlimited certificates for 1 year)
+- Upgrade from Single to Annual: $30.00
+
+## Key Features
+
+- **AI Regulatory Monitoring:** Live system syncs with CDC, OSHA, and HHS every 60 seconds to keep course content current
+- **Instant Certificate Generation:** Pass the exam, receive a professionally designed PDF certificate immediately
+- **Public Certificate Verification:** Every certificate is publicly verifiable with QR code at fastcredentials.com/verify/
+- **100% Pass Requirement:** Ensures every credential represents genuine mastery
+
+## Course Categories
+
+### Medical & Healthcare
+- HIPAA Patient Confidentiality
+- Bloodborne Pathogens (Healthcare)
+- Bloodborne Pathogens (Body Art/Tattoo)
+- Healthcare BLS (Basic Life Support)
+- Operating Room Protocols
+- Radiation Safety
+- Aseptic Technique
+- AdvaMed Code of Ethics
+- Open Payments/Sunshine Act
+
+### Workplace Compliance
+- Sexual Harassment Prevention
+- DEI in the Workplace
+- Cybersecurity Awareness
+- Active Shooter Response
+- Conflict Resolution
+
+### Safety & Trade
+- Forklift Safety (3-Year Certification)
+- Food Handler Certification (3-Year)
+- Alcohol Awareness (3-Year)
+- Fire Safety for Healthcare
+- Electrical Safety
+- Lockout/Tagout (LOTO)
+- GHS/HazCom
+- Slips, Trips & Falls Prevention
+- Standard CPR & AED
+- Standard First Aid
+
+## Certificate Validity Periods
+
+- CPR/BLS/Basic Life Support: 2 Years (AHA Guidelines)
+- Forklift/Food Handler/Alcohol Awareness: 3 Years
+- All other courses: 1 Year (OSHA/JCAHO standard)
+
+## Important Pages
+
+- Homepage: https://fastcredentials.com/
+- About Us: https://fastcredentials.com/about/
+- Course Catalog: https://fastcredentials.com/#courses
+- Support: https://fastcredentials.com/support/
+- Pricing: https://fastcredentials.com/pricing/
+- FAQ: https://fastcredentials.com/faq/
+- AI Monitoring Info: https://fastcredentials.com/powered-by-ai/
+- Certificate Verification: https://fastcredentials.com/verify/[certificate_id]
+- Blog: https://fastcredentials.com/blog/
+
+## Frequently Asked Questions
+
+Q: How much does a certificate cost?
+A: Single certificates are $19.99 each. An annual all-access pass for unlimited certificates is $49.99/year.
+
+Q: Is the training free?
+A: Yes, all training and testing is completely free. You only pay when you want to download your official certificate.
+
+Q: How long are certificates valid?
+A: CPR/BLS certificates are valid for 2 years. Forklift, food handler, and alcohol awareness certificates are valid for 3 years. All other certificates are valid for 1 year.
+
+Q: Can employers verify my certificate?
+A: Yes, every certificate includes a unique ID and QR code. Employers can verify at fastcredentials.com/verify/[certificate_id].
+
+Q: What if I fail the exam?
+A: You can retake the exam as many times as needed for free. You must score 100% to pass.
+
+Q: How does the AI monitoring work?
+A: Our AI system monitors CDC, OSHA, and HHS regulatory feeds in real-time. When regulations change, affected course content is automatically updated and credentialed users are notified by email.

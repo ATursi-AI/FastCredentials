@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+
+{% block title %}Pricing - Affordable Compliance Certificates{% endblock %}
+{% block meta_description %}FastCredentials pricing: Single certificates $19.99, Annual All-Access Pass $49.99. Free training, free testing. Pay only for your certificate. HIPAA, OSHA, CPR and more.{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+
+        <div class="text-center mb-5">
+            <h1 class="fw-bold mb-3" style="color: var(--primary-brand); letter-spacing: -1px;">Simple, Transparent Pricing</h1>
+            <p class="text-muted lead">Free to study. Free to test. Pay only for your certificate.</p>
+        </div>
+
+        <!-- Pricing Cards -->
+        <div class="row g-4 justify-content-center mb-5">
+
+            <!-- Single Certificate -->
+            <div class="col-md-5">
+                <div class="card h-100 border-0 shadow-sm" style="border-radius: 16px;">
+                    <div class="card-body p-4 text-center">
+                        <div class="mb-3">
+                            <i class="bi bi-award" style="font-size: 2.5rem; color: var(--primary-brand);"></i>
+                        </div>
+                        <h2 class="h4 fw-bold mb-2" style="color: var(--primary-brand);">Single Certificate</h2>
+                        <p class="text-muted small mb-4">Perfect for one-time certification needs</p>
+
+                        <div class="mb-4">
+                            <span class="display-4 fw-bold" style="color: var(--primary-brand);">$19.99</span>
+                            <span class="text-muted">/certificate</span>
+                        </div>
+
+                        <ul class="list-unstyled text-start mb-4">
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Free course access</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Free unlimited exam retakes</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Instant PDF download</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>QR code verification</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Employer verification portal</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Expiration reminders</li>
+                        </ul>
+
+                        <a href="{% url 'signup' %}?plan=single" class="btn w-100 py-2 fw-bold" style="background: var(--primary-brand); color: white; border-radius: 50px;">
+                            Get Started Free
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Annual Pass -->
+            <div class="col-md-5">
+                <div class="card h-100 border-0 shadow position-relative" style="border-radius: 16px; border: 3px solid var(--success-brand) !important;">
+                    <div class="position-absolute top-0 start-50 translate-middle">
+                        <span class="badge px-3 py-2 fw-bold" style="background: var(--success-brand); font-size: 0.8rem;">BEST VALUE</span>
+                    </div>
+                    <div class="card-body p-4 text-center">
+                        <div class="mb-3">
+                            <i class="bi bi-infinity" style="font-size: 2.5rem; color: var(--success-brand);"></i>
+                        </div>
+                        <h2 class="h4 fw-bold mb-2" style="color: var(--primary-brand);">Annual All-Access Pass</h2>
+                        <p class="text-muted small mb-4">Unlimited certificates for one year</p>
+
+                        <div class="mb-4">
+                            <span class="display-4 fw-bold" style="color: var(--success-brand);">$49.99</span>
+                            <span class="text-muted">/year</span>
+                        </div>
+
+                        <ul class="list-unstyled text-start mb-4">
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i><strong>Unlimited certificates</strong></li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i><strong>All 20+ courses included</strong></li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Free unlimited exam retakes</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Instant PDF downloads</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>QR code verification</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Regulatory update alerts</li>
+                        </ul>
+
+                        <a href="{% url 'signup' %}?plan=annual" class="btn w-100 py-2 fw-bold" style="background: var(--success-brand); color: white; border-radius: 50px;">
+                            Get All-Access Pass
+                        </a>
+
+                        <p class="small text-muted mt-3 mb-0">
+                            <i class="bi bi-arrow-up-circle me-1"></i>Already purchased? Upgrade for just $30
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Value Comparison -->
+        <div class="text-center mb-5 p-4" style="background: #f8fafc; border-radius: 16px;">
+            <h3 class="h5 fw-bold mb-3" style="color: var(--primary-brand);">Why FastCredentials?</h3>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="p-3">
+                        <div class="h2 fw-bold" style="color: var(--success-brand);">70%</div>
+                        <p class="small text-muted mb-0">Average savings vs. competitors</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3">
+                        <div class="h2 fw-bold" style="color: var(--success-brand);">$0</div>
+                        <p class="small text-muted mb-0">Cost to study & test</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3">
+                        <div class="h2 fw-bold" style="color: var(--success-brand);">24/7</div>
+                        <p class="small text-muted mb-0">AI regulatory monitoring</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- All Courses Section -->
+        <div class="mb-5">
+            <h3 class="h4 fw-bold text-center mb-4" style="color: var(--primary-brand);">Courses Included</h3>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <h4 class="h6 fw-bold mb-3" style="color: var(--primary-brand);">
+                        <i class="bi bi-heart-pulse me-2"></i>Medical & Healthcare
+                    </h4>
+                    <ul class="list-unstyled small text-muted">
+                        <li class="mb-1">• HIPAA Patient Confidentiality</li>
+                        <li class="mb-1">• Bloodborne Pathogens</li>
+                        <li class="mb-1">• Healthcare BLS</li>
+                        <li class="mb-1">• Operating Room Protocols</li>
+                        <li class="mb-1">• Radiation Safety</li>
+                        <li class="mb-1">• Aseptic Technique</li>
+                        <li class="mb-1">• AdvaMed Code of Ethics</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h4 class="h6 fw-bold mb-3" style="color: var(--primary-brand);">
+                        <i class="bi bi-building me-2"></i>Workplace Compliance
+                    </h4>
+                    <ul class="list-unstyled small text-muted">
+                        <li class="mb-1">• Sexual Harassment Prevention</li>
+                        <li class="mb-1">• DEI in the Workplace</li>
+                        <li class="mb-1">• Cybersecurity Awareness</li>
+                        <li class="mb-1">• Active Shooter Response</li>
+                        <li class="mb-1">• Conflict Resolution</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h4 class="h6 fw-bold mb-3" style="color: var(--primary-brand);">
+                        <i class="bi bi-shield-check me-2"></i>Safety & Trade
+                    </h4>
+                    <ul class="list-unstyled small text-muted">
+                        <li class="mb-1">• Forklift Safety (3-Year)</li>
+                        <li class="mb-1">• Food Handler (3-Year)</li>
+                        <li class="mb-1">• Alcohol Awareness (3-Year)</li>
+                        <li class="mb-1">• Fire Safety</li>
+                        <li class="mb-1">• Electrical Safety</li>
+                        <li class="mb-1">• Lockout/Tagout</li>
+                        <li class="mb-1">• CPR & First Aid</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Link -->
+        <div class="text-center pt-4 border-top">
+            <p class="text-muted mb-3">Have questions about pricing or certificates?</p>
+            <a href="{% url 'faq' %}" class="btn btn-outline-secondary px-4" style="border-radius: 50px;">
+                View FAQ <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<!-- Pricing Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "FastCredentials Compliance Training",
+  "description": "Healthcare compliance training and certification platform with AI-powered regulatory monitoring",
+  "brand": {
+    "@type": "Brand",
+    "name": "FastCredentials"
+  },
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Single Certificate",
+      "price": "19.99",
+      "priceCurrency": "USD",
+      "description": "One compliance certificate with instant PDF download and employer verification"
+    },
+    {
+      "@type": "Offer",
+      "name": "Annual All-Access Pass",
+      "price": "49.99",
+      "priceCurrency": "USD",
+      "description": "Unlimited certificates for one year across all 20+ compliance courses"
+    }
+  ]
+}
+</script>
+{% endblock %}
