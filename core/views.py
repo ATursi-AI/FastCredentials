@@ -281,7 +281,6 @@ def signup(request):
                     del request.session[f'passed_course_{c.id}']
 
             pending_plan = request.session.pop('pending_plan', None)
-
             if pending_plan:
                 cid = redirect_course_id or (Course.objects.first().id if Course.objects.exists() else 1)
                 return redirect(reverse('create_checkout_session', kwargs={'course_id': cid}) + f'?plan={pending_plan}')
