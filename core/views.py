@@ -71,7 +71,7 @@ def dashboard(request):
     for course in courses:
         course.user_cert_id = cert_map.get(course.id)
         course.is_completed = (course.id in cert_map)
-        course.has_paid = request.user.is_superuser or has_annual_pass or (course.id in paid_course_ids)
+        course.has_paid = request.user.is_superuser or request.user.groups.filter(name='FreeAccess').exists() or has_annual_pass or (course.id in paid_course_ids)
         title = course.title.upper()
         if any(x in title for x in ['FORKLIFT', 'ALCOHOL', 'FOOD']):
             course.badge_text, course.badge_color = '3-YEAR CERT', '#ffc107'
@@ -153,7 +153,9 @@ def certificate_view(request, cert_id):
 
     cert = get_object_or_404(Certificate, cert_id=cert_id, user=request.user)
     one_year_ago = timezone.now() - timedelta(days=365)
+
     has_paid = request.user.is_superuser or \
+               request.user.groups.filter(name='FreeAccess').exists() or \
                Payment.objects.filter(user=request.user, date__gte=one_year_ago, amount__gte=49.00).exists() or \
                Payment.objects.filter(user=request.user, course=cert.course, date__gte=one_year_ago).exists()
     

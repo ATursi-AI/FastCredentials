@@ -19,7 +19,14 @@ TOPICS = [
     "How AI is changing compliance training forever",
     "Why annual compliance training is not enough anymore",
     "The cost of non-compliance for healthcare organizations",
+    "The tattoo shop mistake that could end your career overnight",
+    "Why forklift operators are getting fired for skipping this one certification",
+    "HIPAA violations that cost healthcare workers their jobs in 2026",
+    "The 10-minute safety training that saved a nurse's career",
+    "What happens when OSHA shows up unannounced at your facility",
+    "Food handler certification: the $10,000 mistake restaurants keep making",
 ]
+
 
 def generate_post(topic):
     client = anthropic.Anthropic(api_key=os.environ.get('ANTHROPIC_API_KEY'))
